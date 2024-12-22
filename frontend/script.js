@@ -150,6 +150,13 @@ function bonus() {
     nextPlayer();
 }
 
+// Simple "Undo" action
+function undoAction() {
+    // For now, just show an alert or do partial logic.
+    // In a real scenario, you'd store the previous game state to revert changes.
+    alert("Undo last move (placeholder)!");
+}
+
 // Reset the "Play Game" page but keep global players & wins
 function resetGamePage() {
     // Show the "Play Game" heading again
@@ -187,9 +194,9 @@ function showPage(pageId) {
 
 /* 
  * "resetToAddPlayer()" 
- * Called by the new Reset button below the player list
+ * Called by the reset button below the player list
  */
 function resetToAddPlayer() {
     resetGamePage();    
-    showPage('game');   // Force the user to stay on the 'game' page with the setup
+    showPage('game');   // Force user to remain on 'game' page with the setup
 }
