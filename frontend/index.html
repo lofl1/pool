@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Disable user zooming (double-tap/pinch) on mobile -->
-  <meta 
+  <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no"
   />
   <title>Killer Pool 🎱</title>
 
-  <!-- Google Fonts: Rubik Mono One + Rubik for text -->
+  <!-- Google Fonts: Rubik Mono One (and Rubik for body text) -->
   <link
     href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Rubik+Mono+One&display=swap"
     rel="stylesheet"
   />
   
-  <!-- Main Styles -->
+  <!-- Link to your stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Burger Menu Navigation -->
   <nav>
     <div class="burger-menu" onclick="toggleMenu()">☰</div>
+    <!-- Centered Title in Rubik Mono One, White -->
     <h1 class="nav-title">Killer Pool</h1>
 
     <div id="menu" class="menu hidden">
@@ -35,40 +35,45 @@
   <div id="home" class="page">
     <h1>Killer Pool</h1>
     <p class="subtext">Made by Lofl</p>
+    <!-- Large black Start Game button on the home page -->
     <button id="homeStartGameBtn" onclick="showPage('game')">START GAME</button>
   </div>
 
   <!-- Play Game Page -->
   <div id="game" class="page hidden">
+    <!-- Heading for the page (hidden in JS once the game starts) -->
     <h2>🎮 Play Game</h2>
 
-    <!-- Banner for current player -->
+    <!-- Fixed banner for the current player's name (hidden until Start Game) -->
     <div id="currentPlayerBanner" class="hidden">
       <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
     </div>
 
-    <!-- Add Players -->
+    <!-- Add Players Section -->
     <div id="setup">
       <h3>👥 Add Players</h3>
       <input type="text" id="playerName" placeholder="Enter player name" />
-      <button id="addPlayerBtn" onclick="addPlayer()">➕ Add</button>
+      <button id="addPlayerBtn" onclick="addPlayer()">➕ Add Player</button>
       <ul id="playerList" class="player-list"></ul>
 
-      <button id="shuffleBtn" onclick="shufflePlayers()">🔀 Shuffle</button>
-      <button id="startGameBtn" onclick="startGame()">🚀 Start</button>
+      <!-- Shuffle Order button for add-players list -->
+      <button id="shuffleBtn" onclick="shufflePlayers()">🔀 Shuffle Order</button>
+      <button id="startGameBtn" onclick="startGame()">🚀 Start Game</button>
     </div>
 
-    <!-- Main Game Area -->
+    <!-- Main game area (hidden until Start Game) -->
     <div id="game-area" class="hidden">
       <ul id="livesList" class="player-list"></ul>
+
+      <!-- RESET BUTTON below the player list -->
       <button id="resetBtn" onclick="resetToAddPlayer()">🔄 Reset</button>
 
-      <!-- Bottom Controls: Only Emojis -->
+      <!-- Docked game controls (including the new Undo button) -->
       <div class="game-controls">
-        <button id="potBtn" onclick="pot()">✅</button>
-        <button id="missBtn" onclick="miss()">❌</button>
-        <button id="bonusBtn" onclick="bonus()">🎁</button>
-        <button id="undoBtn" onclick="undoAction()">↩️</button>
+        <button id="potBtn" onclick="pot()">✅ POT</button>
+        <button id="missBtn" onclick="miss()">❌ MISS</button>
+        <button id="bonusBtn" onclick="bonus()">🎁 BONUS</button>
+        <button id="undoBtn" onclick="undoAction()">↩️ UNDO</button>
       </div>
     </div>
   </div>
@@ -80,10 +85,10 @@
       <h3>📊 Total Wins</h3>
       <ul id="scoreboard"></ul>
     </div>
-    <button id="playAnotherBtn" onclick="showPage('game')">🔄 Play Again</button>
+    <button id="playAnotherBtn" onclick="showPage('game')">🔄 Play Another Game</button>
   </div>
 
-  <!-- JS -->
+  <!-- Your JavaScript file -->
   <script src="script.js"></script>
 </body>
 </html>
