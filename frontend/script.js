@@ -9,6 +9,26 @@ function toggleMenu() {
     menu.classList.toggle("hidden");
 }
 
+// Close the burger menu
+function closeMenu() {
+    const menu = document.getElementById("menu");
+    menu.classList.add("hidden");
+}
+
+// Show a specific page
+function showPage(pageId) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+
+    // Show the selected page
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.remove('hidden');
+    } else {
+        console.error(`Page with ID "${pageId}" not found`);
+    }
+}
+
 // Add a new player
 function addPlayer() {
     const playerName = document.getElementById("playerName").value.trim();
@@ -59,21 +79,31 @@ function updateHistoryPage() {
 
 // Fetch wins and history from the backend
 async function loadWins() {
-    const response = await fetch(backendURL);
-    const data = await response.json();
-    wins = data.wins || {};
-    history = data.history || {};
-    updateScoreboard();
+    try {
+        const response = await fetch(`${backendURL}/api/data`);
+        const data = await response.json();
+        wins = data.wins || {};
+        history = data.history || {};
+        updateScoreboard();
+    } catch (error) {
+        console.error("Failed to load data from backend:", error);
+    }
 }
 
 // Save wins and history to the backend
 async function saveWins() {
-    await fetch(backendURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ newWins: wins, newHistory: history }),
-    });
+    try {
+        await fetch(`${backendURL}/api/data`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ newWins: wins, newHistory: history }),
+        });
+    } catch (error) {
+        console.error("Failed to save data to backend:", error);
+    }
 }
 
 // Initialize the app
-loadWins();
+document.addEventListener('DOMContentLoaded', () => {
+    loadWins();
+});
