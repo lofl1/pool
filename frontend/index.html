@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- CHANGED: added maximum-scale=1 to help prevent double-tap zoom -->
+
+  <!-- CHANGED: include min/max-scale=1 to try to prevent double-tap zoom -->
+  <!-- also keep user-scalable=no -->
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
   />
+
+  <!-- CHANGED: iOS "Add to Home Screen" standalone mode + black-translucent status bar -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <title>Killer Pool 🎱</title>
 
   <!-- Google Fonts: Rubik Mono One (and Rubik for body text) -->
@@ -14,7 +21,7 @@
     href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Rubik+Mono+One&display=swap"
     rel="stylesheet"
   />
-  
+
   <!-- Link to your stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
