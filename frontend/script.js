@@ -1,46 +1,36 @@
-const backendURL = 'https://pool-69rx.onrender.com'; // Replace with your Render backend URL
+const backendURL = 'https://pool-69rx.onrender.com'; // Replace with your backend URL
 
 let wins = {};
-let history = {};
+let currentPlayers = [];
+let currentIndex = 0;
 
-// Toggle the burger menu visibility
 function toggleMenu() {
     const menu = document.getElementById("menu");
     menu.classList.toggle("hidden");
 }
 
-// Close the burger menu
 function closeMenu() {
     const menu = document.getElementById("menu");
     menu.classList.add("hidden");
 }
 
-// Show a specific page
 function showPage(pageId) {
-    // Hide all pages
     document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
-
-    // Show the selected page
     const targetPage = document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.remove('hidden');
-    } else {
-        console.error(`Page with ID "${pageId}" not found`);
     }
 }
 
-// Add a new player
 function addPlayer() {
     const playerName = document.getElementById("playerName").value.trim();
-    if (playerName && !Object.keys(wins).includes(playerName)) {
+    if (playerName && !wins[playerName]) {
         wins[playerName] = 0;
         updatePlayerList();
         document.getElementById("playerName").value = "";
-        saveWins(); // Save updated wins to the backend
     }
 }
 
-// Update the player list
 function updatePlayerList() {
     const playerList = document.getElementById("playerList");
     playerList.innerHTML = Object.keys(wins)
@@ -48,62 +38,67 @@ function updatePlayerList() {
         .join("");
 }
 
-// Start the game
 function startGame() {
-    alert("Game Started!"); // Add your game logic here
+    if (Object.keys(wins).length < 2) {
+        alert("At least two players are required to start the game.");
+        return;
+    }
+    currentPlayers = Object.keys(wins).map(name => ({ name, lives: 3 }));
+    currentIndex = 0;
+
+    document.getElementById("setup").classList.add("hidden");
+    document.getElementById("game-area").classList.remove("hidden");
+
+    updateGameUI();
 }
 
-// Update the scoreboard with today's win counts
-function updateScoreboard() {
-    const scoreboard = document.getElementById("scoreboard");
-    scoreboard.innerHTML = Object.entries(wins)
-        .map(([player, winCount]) => `<li>${player}: ${winCount} 🏆</li>`)
+function updateGameUI() {
+    if (currentPlayers.length === 0) {
+        alert("Game Over!");
+        resetGame();
+        return;
+    }
+
+    const currentPlayer = currentPlayers[currentIndex];
+    document.getElementById("currentPlayer").textContent = currentPlayer.name;
+
+    const livesList = document.getElementById("livesList");
+    livesList.innerHTML = currentPlayers
+        .map(player => `<li>${player.name}: ${"❤️".repeat(player.lives)}</li>`)
         .join("");
 }
 
-// Update the history page
-function updateHistoryPage() {
-    const historyRecords = document.getElementById("historyRecords");
-    historyRecords.innerHTML = Object.entries(history)
-        .map(([date, dailyWins]) => {
-            const playerRecords = Object.entries(dailyWins)
-                .map(([player, winCount]) => `<li>${player}: ${winCount} 🏆</li>`)
-                .join("");
-            return `<div>
-                        <h3>${date}</h3>
-                        <ul>${playerRecords}</ul>
-                    </div>`;
-        })
-        .join("");
+function pot() {
+    currentIndex = (currentIndex + 1) % currentPlayers.length;
+    updateGameUI();
 }
 
-// Fetch wins and history from the backend
-async function loadWins() {
-    try {
-        const response = await fetch(`${backendURL}/api/data`);
-        const data = await response.json();
-        wins = data.wins || {};
-        history = data.history || {};
-        updateScoreboard();
-    } catch (error) {
-        console.error("Failed to load data from backend:", error);
+function miss() {
+    currentPlayers[currentIndex].lives--;
+    if (currentPlayers[currentIndex].lives <= 0) {
+        alert(`${currentPlayers[currentIndex].name} is out!`);
+        currentPlayers.splice(currentIndex, 1);
+        if (currentIndex >= currentPlayers.length) {
+            currentIndex = 0;
+        }
     }
+    updateGameUI();
 }
 
-// Save wins and history to the backend
-async function saveWins() {
-    try {
-        await fetch(`${backendURL}/api/data`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ newWins: wins, newHistory: history }),
-        });
-    } catch (error) {
-        console.error("Failed to save data to backend:", error);
-    }
+function bonus() {
+    currentPlayers[currentIndex].lives++;
+    updateGameUI();
 }
 
-// Initialize the app
-document.addEventListener('DOMContentLoaded', () => {
-    loadWins();
-});
+function shuffleOrder() {
+    currentPlayers.sort(() => Math.random() - 0.5);
+    updateGameUI();
+    alert("Player order shuffled!");
+}
+
+function resetGame() {
+    document.getElementById("setup").classList.remove("hidden");
+    document.getElementById("game-area").classList.add("hidden");
+    currentPlayers = [];
+    currentIndex = 0;
+}
