@@ -37,6 +37,13 @@
     <!-- Play Game Page -->
     <div id="game" class="page hidden">
         <h2>🎮 Play Game</h2>
+
+        <!-- This banner (hidden initially) will show the current player at the top -->
+        <div id="currentPlayerBanner" class="hidden">
+            <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
+        </div>
+
+        <!-- Add Players Section (visible initially, hidden after startGame()) -->
         <div id="setup">
             <h3>👥 Add Players</h3>
             <input type="text" id="playerName" placeholder="Enter player name" />
@@ -44,8 +51,11 @@
             <ul id="playerList" class="player-list"></ul>
             <button onclick="startGame()">🚀 Start Game</button>
         </div>
+
+        <!-- Main game area (hidden until startGame() runs) -->
         <div id="game-area" class="hidden">
-            <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
+            <!-- Removed the old “Current Player” heading from here 
+                 because we now have a separate banner at the top. -->
             <ul id="livesList" class="player-list"></ul>
             <div class="game-controls">
                 <button onclick="pot()">✅ POT</button>
