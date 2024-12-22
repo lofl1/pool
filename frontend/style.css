@@ -304,10 +304,10 @@ h2, h3 {
 }
 
 .highlight {
-  background-color: #ffeb3b;
-  font-weight: bold;
-  border-radius: 25px; 
+  background-color: #ccf7d8;
+  border-radius: 25px;
   padding: 5px;
+  font-weight: 500; /* or 700 if you still want bolder text */
   color: #333;
 }
 
