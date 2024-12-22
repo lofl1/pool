@@ -18,10 +18,10 @@ document.querySelectorAll('#menu button').forEach(button => {
 });
 
 // Global Variables
-let players = [];       // Main player list (persists across sessions)
+let players = [];        // Main player list (persists across sessions)
 let currentPlayers = []; // Active players in the current game
-let currentIndex = 0;   // Tracks whose turn it is
-let wins = {};          // Persistent wins tracking
+let currentIndex = 0;    // Tracks whose turn it is
+let wins = {};           // Persistent wins tracking
 
 // Add a new player
 function addPlayer() {
@@ -150,7 +150,7 @@ function bonus() {
     nextPlayer();
 }
 
-// Reset the "Play Game" page but keep player names & wins
+// Reset the "Play Game" page but keep global players & wins
 function resetGamePage() {
     // Show the "Play Game" heading again
     document.querySelector("#game h2").classList.remove("hidden");
@@ -183,4 +183,15 @@ function showPage(pageId) {
     if (pageId === 'wins') {
         updateScoreboard();
     }
+}
+
+/* 
+ * NEW FUNCTION: "resetToAddPlayer()" 
+ * This just calls resetGamePage() and then 
+ * ensures we stay on the 'game' page with 
+ * the setup area visible.
+ */
+function resetToAddPlayer() {
+    resetGamePage();    // Puts the screen back to the initial add-player state
+    showPage('game');   // Make sure we're on the game page
 }
