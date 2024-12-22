@@ -10,109 +10,68 @@ function closeMenu() {
     menu.classList.add("hidden");
 }
 
-// Add event listeners to close the menu when a button is clicked
-document.querySelectorAll('#menu button').forEach(button => {
-    button.addEventListener('click', closeMenu);
-});
+// Navigation: Show specific page
+function showPage(pageId) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
 
-// Global Variables
-let players = [];
-let currentPlayers = [];
-let currentIndex = 0;
-let wins = {};
-
-// Add a new player
-function addPlayer() {
-    const playerName = document.getElementById("playerName").value.trim();
-    if (playerName && !players.some(player => player.name === playerName)) {
-        players.push({ name: playerName });
-        wins[playerName] = wins[playerName] || 0; // Initialize wins
-        updatePlayerList();
-        document.getElementById("playerName").value = "";
+    // Show the target page
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.remove('hidden');
+    } else {
+        console.error(`Page with ID "${pageId}" not found.`);
     }
+
+    // Close the burger menu
+    closeMenu();
 }
 
-// Update the player list
-function updatePlayerList() {
-    const playerList = document.getElementById("playerList");
-    playerList.innerHTML = players
-        .map((player, index) => `<li>${player.name}</li>`)
-        .join("");
+// Add players
+function addPlayer() {
+    const playerName = document.getElementById("playerName").value.trim();
+    if (playerName) {
+        const playerList = document.getElementById("playerList");
+        const newPlayer = document.createElement("li");
+        newPlayer.textContent = playerName;
+        playerList.appendChild(newPlayer);
+
+        document.getElementById("playerName").value = ""; // Clear input
+    }
 }
 
 // Start the game
 function startGame() {
-    if (players.length < 2) {
+    const playerList = document.getElementById("playerList").children;
+    if (playerList.length < 2) {
         alert("At least two players are required to start the game.");
         return;
     }
-
-    // Initialize game state
-    currentPlayers = players.map(player => ({ name: player.name, lives: 3 }));
-    currentIndex = 0;
 
     // Hide setup and show game area
     document.getElementById("setup").classList.add("hidden");
     const gameArea = document.getElementById("game-area");
     gameArea.classList.remove("hidden");
 
-    // Scroll smoothly to the game area
+    // Scroll to the game area
     gameArea.scrollIntoView({ behavior: "smooth" });
 
-    updateGameUI();
+    console.log("Game started!");
 }
 
-// Update the game UI
-function updateGameUI() {
-    const currentPlayer = currentPlayers[currentIndex];
-    document.getElementById("currentPlayer").textContent = currentPlayer.name;
-
-    const livesList = document.getElementById("livesList");
-    livesList.innerHTML = currentPlayers
-        .map(player => `<li>${player.name}: ${"❤️".repeat(player.lives)}</li>`)
-        .join("");
-}
-
-// Gameplay Actions
+// Placeholder functions for gameplay actions
 function pot() {
-    nextPlayer();
+    alert("POT action triggered.");
 }
 
 function miss() {
-    currentPlayers[currentIndex].lives--;
-    if (currentPlayers[currentIndex].lives <= 0) {
-        alert(`${currentPlayers[currentIndex].name} is out!`);
-        currentPlayers.splice(currentIndex, 1);
-        if (currentIndex >= currentPlayers.length) currentIndex = 0;
-    }
-    nextPlayer();
+    alert("MISS action triggered.");
 }
 
 function bonus() {
-    currentPlayers[currentIndex].lives++;
-    nextPlayer();
+    alert("BONUS action triggered.");
 }
 
 function shuffleOrder() {
-    currentPlayers.sort(() => Math.random() - 0.5);
-    updateGameUI();
-    alert("Player order shuffled!");
-}
-
-function nextPlayer() {
-    if (currentPlayers.length === 1) {
-        alert(`${currentPlayers[0].name} wins!`);
-        resetGamePage();
-        return;
-    }
-    currentIndex = (currentIndex + 1) % currentPlayers.length;
-    updateGameUI();
-}
-
-// Reset the game page
-function resetGamePage() {
-    document.getElementById("setup").classList.remove("hidden");
-    document.getElementById("game-area").classList.add("hidden");
-    currentPlayers = [];
-    currentIndex = 0;
+    alert("SHUFFLE ORDER action triggered.");
 }
