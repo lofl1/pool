@@ -17,6 +17,11 @@ document.querySelectorAll('#menu button').forEach(button => {
     button.addEventListener('click', closeMenu);
 });
 
+// CHANGED: detect if running in standalone mode and add a class to body
+if (window.navigator.standalone === true) {
+    document.body.classList.add('standalone');
+}
+
 // Global Variables
 let players = [];            // All players added BEFORE game starts
 let currentPlayers = [];     // Active players in the current game
@@ -100,7 +105,7 @@ function updateGameUI() {
     const currentPlayer = currentPlayers[currentIndex];
     document.getElementById("currentPlayer").textContent = currentPlayer.name;
 
-    // Build the lives list
+    // Highlight current player in the lives list
     const livesList = document.getElementById("livesList");
     livesList.innerHTML = currentPlayers.map((player, i) => {
         const highlightClass = i === currentIndex ? 'highlight' : '';
@@ -127,19 +132,6 @@ function nextPlayer() {
     }
 }
 
-/** ========== ANIMATE THE CURRENT PLAYER'S <li> ========== **/
-/* NEW: Subtle "pop" animation on the player's row after pot/miss/bonus */
-function animateCurrentListItem() {
-    const liItems = document.querySelectorAll('#livesList li');
-    if (!liItems[currentIndex]) return;
-    liItems[currentIndex].classList.add('animate-life');
-    setTimeout(() => {
-        liItems[currentIndex]?.classList.remove('animate-life');
-    }, 500);
-}
-
-/** ========== ACTIONS WITH UNDO SUPPORT ========== **/
-
 function pot() {
     // Store last action
     lastAction = {
@@ -150,7 +142,6 @@ function pot() {
         prevIndex: currentIndex
     };
     // No life change for a pot, just moves to next player
-    animateCurrentListItem(); // NEW
     nextPlayer();
 }
 
@@ -173,14 +164,10 @@ function miss() {
     if (currentPlayers[currentIndex].lives <= 0) {
         alert(`${currentPlayers[currentIndex].name} is out! ❌`);
         currentPlayers.splice(currentIndex, 1);
-
-        // Adjust index if we removed the current player
         if (currentIndex >= currentPlayers.length) {
             currentIndex = 0;
         }
     }
-
-    animateCurrentListItem(); // NEW
     nextPlayer();
 }
 
@@ -199,7 +186,6 @@ function bonus() {
     currentPlayers[currentIndex].lives++;
     lastAction.newLives = currentPlayers[currentIndex].lives;
 
-    animateCurrentListItem(); // NEW
     nextPlayer();
 }
 
@@ -276,18 +262,11 @@ function updateScoreboard() {
         .join("");
 }
 
-// CHANGED: Add fade animations when switching pages
 function showPage(pageId) {
     // Hide all pages
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.add('hidden');
-    });
-
-    // Show the new page (remove .hidden so it transitions in)
-    const targetPage = document.getElementById(pageId);
-    targetPage.classList.remove('hidden');
-
-    // If it's the wins page, update scoreboard
+    document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+    // Show the target page
+    document.getElementById(pageId).classList.remove('hidden');
     if (pageId === 'wins') {
         updateScoreboard();
     }
