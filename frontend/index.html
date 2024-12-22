@@ -7,21 +7,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Burger Menu Navigation -->
     <nav>
         <div class="burger-menu" onclick="toggleMenu()">☰</div>
         <div id="menu" class="menu hidden">
-            <button onclick="showPage('home')">🏠 Home</button>
-            <button onclick="showPage('game')">🎮 Play Game</button>
-            <button onclick="showPage('wins')">🏆 Win Counter</button>
-            <button onclick="showPage('history'); updateHistoryPage()">📜 History</button>
+            <button onclick="showPage('home'); closeMenu()">🏠 Home</button>
+            <button onclick="showPage('game'); closeMenu()">🎮 Play Game</button>
+            <button onclick="showPage('wins'); closeMenu()">🏆 Win Counter</button>
+            <button onclick="showPage('history'); updateHistoryPage(); closeMenu()">📜 History</button>
         </div>
     </nav>
 
+    <!-- Home Page -->
     <div id="home" class="page">
         <h1>🎱 KILLER POOL</h1>
         <p>Welcome to the ultimate pool game tracker! 🕹️</p>
     </div>
 
+    <!-- Play Game Page -->
     <div id="game" class="page hidden">
         <h2>🎮 Play Game</h2>
         <div id="setup">
@@ -31,18 +34,9 @@
             <ul id="playerList" class="player-list"></ul>
             <button onclick="startGame()">🚀 Start Game</button>
         </div>
-        <div id="game-area" class="hidden">
-            <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
-            <ul id="livesList" class="player-list"></ul>
-            <div class="game-controls">
-                <button onclick="pot()">✅ POT</button>
-                <button onclick="miss()">❌ MISS</button>
-                <button onclick="bonus()">🎁 BONUS</button>
-                <button onclick="shuffleOrder()">🔀 Shuffle Order</button>
-            </div>
-        </div>
     </div>
 
+    <!-- Win Counter Page -->
     <div id="wins" class="page hidden">
         <h2>🏆 Win Counter</h2>
         <div class="scoreboard">
@@ -51,6 +45,7 @@
         </div>
     </div>
 
+    <!-- History Page -->
     <div id="history" class="page hidden">
         <h2>📜 History</h2>
         <div id="historyRecords"></div>
