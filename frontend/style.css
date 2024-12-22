@@ -103,10 +103,11 @@ nav {
 /* 
   PAGE LAYOUT
 */
+/* CHANGED: from 60px to 110px so banner doesn't cut off content */
 .page {
   display: none;
   padding: 20px;
-  margin-top: 60px; /* keep content below the nav */
+  margin-top: 110px; /* increased to avoid overlap */
 }
 .page:not(.hidden) {
   display: block;
@@ -420,4 +421,31 @@ h2, h3 {
 }
 #playAnotherBtn:hover {
   background-color: #05c094;
+}
+
+/* 
+  ========== MOBILE MEDIA QUERY ========== 
+  Hide text for bottom buttons so only emojis show on small screens
+*/
+@media (max-width: 600px) {
+  #potBtn, #missBtn, #bonusBtn, #undoBtn {
+    font-size: 0;             /* hide original text */
+    position: relative;
+  }
+  #potBtn::before {
+    content: "✅";
+    font-size: 1.2rem;
+  }
+  #missBtn::before {
+    content: "❌";
+    font-size: 1.2rem;
+  }
+  #bonusBtn::before {
+    content: "🎁";
+    font-size: 1.2rem;
+  }
+  #undoBtn::before {
+    content: "↩️";
+    font-size: 1.2rem;
+  }
 }
