@@ -25,14 +25,14 @@
 
     <!-- Play Game Page -->
     <div id="game" class="page hidden">
-        <div id="setup" class="fullscreen">
+        <div id="setup">
             <h3>👥 Add Players</h3>
             <input type="text" id="playerName" placeholder="Enter player name">
             <button onclick="addPlayer()">➕ Add Player</button>
             <ul id="playerList" class="player-list"></ul>
             <button onclick="startGame()">🚀 Start Game</button>
         </div>
-        <div id="game-area" class="fullscreen hidden">
+        <div id="game-area" class="hidden">
             <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
             <ul id="livesList" class="player-list"></ul>
             <div class="game-controls">
@@ -51,7 +51,7 @@
             <h3>📊 Total Wins</h3>
             <ul id="scoreboard"></ul>
         </div>
-        <button onclick="showPage('game'); closeMenu()">🔄 Play Another Game</button>
+        <button onclick="showPage('game')">🔄 Play Another Game</button>
     </div>
 
     <script src="script.js"></script>
