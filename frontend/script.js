@@ -4,12 +4,10 @@ function toggleMenu() {
     menu.classList.toggle("hidden");
 }
 
-// Function to close the burger menu
+// Close the burger menu
 function closeMenu() {
     const menu = document.getElementById("menu");
-    if (!menu.classList.contains("hidden")) {
-        menu.classList.add("hidden");
-    }
+    menu.classList.add("hidden");
 }
 
 // Add event listeners to close the menu when a button is clicked
@@ -36,7 +34,6 @@ function addPlayer() {
 
 // Remove a player
 function removePlayer(index) {
-    const playerName = players[index].name;
     players.splice(index, 1);
     updatePlayerList();
 }
@@ -45,10 +42,12 @@ function removePlayer(index) {
 function updatePlayerList() {
     const playerList = document.getElementById("playerList");
     playerList.innerHTML = players
-        .map((player, index) =>
-            <li>${player.name} 
-            <button onclick="removePlayer(${index})">❌ Delete</button>
-            </li>)
+        .map(
+            (player, index) =>
+                `<li>${player.name} 
+                <button onclick="removePlayer(${index})">❌ Delete</button>
+                </li>`
+        )
         .join("");
 }
 
@@ -65,9 +64,6 @@ function startGame() {
     document.getElementById("setup").classList.add("hidden");
     document.getElementById("game-area").classList.remove("hidden");
     updateGameUI();
-
-    // Scroll to the game area to ensure it's visible
-    document.getElementById("game-area").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // Update the game UI (current player and player lives as hearts)
@@ -82,20 +78,9 @@ function updateGameUI() {
     // Update the list and highlight the current player
     document.getElementById("livesList").innerHTML = currentPlayers
         .map((player, index) => {
-            const highlightClass = index === currentIndex ? 'highlight' : '';
-            return <li class="${highlightClass}">${player.name}: ${"❤️".repeat(player.lives)}</li>;
+            const highlightClass = index === currentIndex ? "highlight" : "";
+            return `<li class="${highlightClass}">${player.name}: ${"❤️".repeat(player.lives)}</li>`;
         })
-        .join("");
-}
-
-// Update the scoreboard with win counts sorted by most wins
-function updateScoreboard() {
-    const sortedWins = Object.entries(wins)
-        .sort(([, a], [, b]) => b - a) // Sort by win count (descending)
-        .map(([player, winCount]) => ({ player, winCount }));
-
-    document.getElementById("scoreboard").innerHTML = sortedWins
-        .map(({ player, winCount }) => <li>${player}: ${winCount} 🏆</li>)
         .join("");
 }
 
@@ -112,10 +97,9 @@ function nextPlayer() {
     if (currentPlayers.length === 1) {
         const winner = currentPlayers[0].name;
         wins[winner]++; // Increment wins
-        updateScoreboard();
-        alert(${winner} wins! 🎉);
+        alert(`${winner} wins! 🎉`);
         resetGamePage();
-        showPage('wins');
+        showPage("wins");
     } else {
         updateGameUI();
     }
@@ -129,7 +113,7 @@ function pot() {
 function miss() {
     currentPlayers[currentIndex].lives--;
     if (currentPlayers[currentIndex].lives <= 0) {
-        alert(${currentPlayers[currentIndex].name} is out! ❌);
+        alert(`${currentPlayers[currentIndex].name} is out! ❌`);
         currentPlayers.splice(currentIndex, 1);
         if (currentIndex >= currentPlayers.length) currentIndex = 0;
     }
@@ -152,7 +136,18 @@ function resetGamePage() {
 
 // Navigation: Show specific page
 function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
-    document.getElementById(pageId).classList.remove('hidden');
-    if (pageId === 'wins') updateScoreboard();
+    document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
+    document.getElementById(pageId).classList.remove("hidden");
+    if (pageId === "wins") updateScoreboard();
+}
+
+// Update the scoreboard with win counts sorted by most wins
+function updateScoreboard() {
+    const sortedWins = Object.entries(wins)
+        .sort(([, a], [, b]) => b - a) // Sort by win count (descending)
+        .map(([player, winCount]) => ({ player, winCount }));
+
+    document.getElementById("scoreboard").innerHTML = sortedWins
+        .map(({ player, winCount }) => `<li>${player}: ${winCount} 🏆</li>`)
+        .join("");
 }
