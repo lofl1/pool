@@ -35,6 +35,8 @@
   <div id="home" class="page">
     <h1>Killer Pool</h1>
     <p class="subtext">Made by Lofl</p>
+    <!-- Large black Start Game button on the home page -->
+    <button id="homeStartGameBtn" onclick="showPage('game')">START GAME</button>
   </div>
 
   <!-- Play Game Page -->
@@ -53,21 +55,25 @@
       <input type="text" id="playerName" placeholder="Enter player name" />
       <button id="addPlayerBtn" onclick="addPlayer()">➕ Add Player</button>
       <ul id="playerList" class="player-list"></ul>
+
+      <!-- Shuffle Order button moved here next to Start Game -->
+      <button id="shuffleBtn" onclick="shuffleOrder()">🔀 Shuffle Order</button>
       <button id="startGameBtn" onclick="startGame()">🚀 Start Game</button>
     </div>
 
     <!-- Main game area (hidden until Start Game) -->
     <div id="game-area" class="hidden">
       <ul id="livesList" class="player-list"></ul>
+
       <!-- RESET BUTTON below the player list -->
       <button id="resetBtn" onclick="resetToAddPlayer()">🔄 Reset</button>
 
-      <!-- Docked game controls at the bottom -->
+      <!-- Docked game controls (including the new Undo button) -->
       <div class="game-controls">
         <button id="potBtn" onclick="pot()">✅ POT</button>
         <button id="missBtn" onclick="miss()">❌ MISS</button>
         <button id="bonusBtn" onclick="bonus()">🎁 BONUS</button>
-        <button id="shuffleBtn" onclick="shuffleOrder()">🔀 Shuffle Order</button>
+        <button id="undoBtn" onclick="undoAction()">↩️ UNDO</button>
       </div>
     </div>
   </div>
