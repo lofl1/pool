@@ -134,13 +134,11 @@ function pot() {
     lastAction = {
         playerIndex: currentIndex,
         prevLives: currentPlayers[currentIndex].lives,
-        actionType: 'pot', // For reference if needed
+        actionType: 'pot',
+        newLives: currentPlayers[currentIndex].lives, 
+        prevIndex: currentIndex
     };
-
     // No life change for a pot, just moves to next player
-    lastAction.newLives = currentPlayers[currentIndex].lives; 
-    lastAction.prevIndex = currentIndex; 
-
     nextPlayer();
 }
 
@@ -168,8 +166,6 @@ function miss() {
         if (currentIndex >= currentPlayers.length) {
             currentIndex = 0;
         }
-
-        // If game is effectively over, nextPlayer() handles that check
     }
     nextPlayer();
 }
@@ -211,24 +207,10 @@ function undoAction() {
         actionType
     } = lastAction;
 
-    // If the player was removed on a 'miss' that killed them, 
-    // we need to re-insert them into currentPlayers.
-
-    // Case: If we removed the player (lives <= 0)
-    // after a miss, we must reinsert them at the same index
+    // If the player was completely removed on a 'miss', a full restore is more complex.
+    // For simplicity, we won't handle re-inserting a removed player here.
     if (actionType === 'miss' && newLives < 1) {
-        // We removed the currentPlayers[playerIndex], so let's put them back
-        // We can store the player's name from the lastAction or deduce it
-        // For simplicity, let's store the player's name in lastAction 
-        // but we didn't do that above. We'll do it by capturing it before removal.
-
-        // Let's approach a simpler fix: if we see newLives < 1, we do:
-        // re-insert them with prevLives
-        // We'll store the name in lastAction so we can restore.
-
         alert("Undo not possible if a player was completely removed. (Simple approach)");
-        // If we want to handle it fully, we'd track the removed player's name 
-        // and re-insert them. For now, let's keep it simple.
         return;
     }
 
@@ -261,7 +243,11 @@ function resetGamePage() {
     lastAction = null;
 }
 
+// CHANGED: Added a confirmation popup before resetting
 function resetToAddPlayer() {
+    if (!confirm("Are you sure you want to RESET the game?")) {
+        return;
+    }
     resetGamePage();    
     showPage('game');   // Remain on 'game' page with the setup
 }
