@@ -186,7 +186,7 @@ function showPage(pageId) {
 }
 
 /* 
- * NEW FUNCTION: "resetToAddPlayer()" 
+ * "resetToAddPlayer()" 
  * Called by the new Reset button below the player list
  */
 function resetToAddPlayer() {
