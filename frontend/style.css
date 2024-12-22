@@ -34,6 +34,15 @@ body.standalone .game-controls {
   padding-bottom: calc(env(safe-area-inset-bottom) + 15px);
 }
 
+html, body {
+  /* existing resets or global styles */
+  margin: 0;
+  padding: 0;
+  
+  /* Add overscroll-behavior to contain iOS bounce scroll: */
+  overscroll-behavior: contain;
+}
+
 .hidden {
   display: none !important;
 }
