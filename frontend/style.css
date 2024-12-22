@@ -4,13 +4,16 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden; /* Prevent scrolling */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .page {
     display: none;
     height: 100vh; /* Full-screen sections */
     width: 100vw;
-    overflow-y: auto; /* Allow vertical scrolling within the section */
+    overflow-y: auto; /* Allow scrolling within the section */
 }
 
 .page:not(.hidden) {
@@ -25,7 +28,7 @@ body {
     align-items: center;
 }
 
-/* Burger Menu Styling */
+/* Navigation */
 nav {
     position: fixed;
     top: 0;
@@ -42,6 +45,31 @@ nav {
     color: white;
 }
 
+.menu {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.menu.hidden {
+    display: none;
+}
+
+.menu button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    margin: 5px 0;
+    cursor: pointer;
+    text-align: left;
+}
+
 /* Game Area Styling */
 #game-area {
     display: flex;
@@ -49,7 +77,6 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    box-sizing: border-box;
 }
 
 .game-controls {
