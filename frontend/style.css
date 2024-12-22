@@ -1,18 +1,14 @@
-/* 
+/*
   1) Define your color palette as CSS variables
-     so you can reuse them easily.
 */
 :root {
-  --bright-pink-crayola: #ef476f;
-  --sunglow: #ffd166;
-  --emerald: #06d6a0;
-  --blue-ncs: #118ab2;
-  --midnight-green: #073b4c;
+  --bright-pink-crayola: #ef476f; /* e.g. for MISS, delete, etc. */
+  --sunglow: #ffd166;            /* e.g. for Add Player, BONUS, etc. */
+  --emerald: #06d6a0;            /* e.g. for Start Game, POT, etc. */
+  --blue-ncs: #118ab2;           /* e.g. for Shuffle, Reset, etc. */
+  --midnight-green: #073b4c;     /* If you wish to use for the nav or accent */
 }
 
-/* 
-  2) Global & Body Styles
-*/
 * {
   box-sizing: border-box;
 }
@@ -37,34 +33,7 @@ body {
 }
 
 /* 
-  3) Headings & Subtext
-*/
-h1 {
-  font-family: 'Rubik Mono One', sans-serif;
-  font-weight: 400; /* Rubik Mono One typically has one main weight */
-  font-size: 3rem;
-  margin: 40px 0 20px;
-  color: #333;
-  text-align: center;
-}
-
-h2, h3 {
-  font-family: 'Rubik', sans-serif; /* Bold heading */
-  font-weight: 700;
-  color: #444;
-  margin: 20px 0;
-  text-align: center;
-}
-
-.subtext, p {
-  font-weight: 500;
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 1.5rem;
-}
-
-/* 
-  4) Navigation
+  NAV + BURGER + TITLE
 */
 nav {
   position: fixed;
@@ -76,6 +45,7 @@ nav {
   padding: 10px;
   text-align: left;
   z-index: 999; /* always on top */
+  height: 50px; /* Adjust if you'd like a taller nav */
 }
 
 .burger-menu {
@@ -83,6 +53,22 @@ nav {
   cursor: pointer;
   display: inline-block;
   color: #fff;
+  margin-top: 3px; /* Slight vertical alignment tweak */
+}
+
+/* The new nav title in Rubik Mono One, centered, white */
+.nav-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-family: 'Rubik Mono One', sans-serif;
+  font-weight: 400; /* This font often has a single main weight */
+  color: #fff;
+  /* Use clamp() to scale text from small on phones to bigger on desktops */
+  font-size: clamp(1rem, 5vw, 2rem);
+  white-space: nowrap; 
 }
 
 .menu {
@@ -110,14 +96,14 @@ nav {
   text-align: left;
   color: #333;
   padding: 8px 12px;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px; /* extra rounded corners for consistent style */
 }
 .menu button:hover {
   background-color: #f0f0f0;
 }
 
 /* 
-  5) Page Layout
+  PAGE LAYOUT
 */
 .page {
   display: none;
@@ -129,7 +115,34 @@ nav {
 }
 
 /* 
-  6) Current Player Banner (FIXED at top under nav)
+  HOME PAGE
+*/
+h1 {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-weight: 400; /* Rubik Mono One typically has one main weight */
+  font-size: 3rem;
+  margin: 40px 0 20px;
+  color: #333;
+  text-align: center;
+}
+
+h2, h3 {
+  font-family: 'Rubik', sans-serif; /* Bold heading */
+  font-weight: 700;
+  color: #444;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.subtext, p {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* 
+  CURRENT PLAYER BANNER (fixed under nav)
 */
 #currentPlayerBanner {
   position: fixed;
@@ -152,7 +165,7 @@ nav {
 }
 
 /* 
-  7) Setup Section
+  SETUP SECTION
 */
 #setup {
   margin: 20px 0;
@@ -175,7 +188,7 @@ nav {
 #setup button {
   margin: 10px 5px;
   padding: 10px 20px;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px;
   color: white;
   font-size: 16px;
   border: none;
@@ -183,23 +196,22 @@ nav {
   transition: background-color 0.2s ease-in-out;
 }
 
-/* Each button gets a specific color from the palette */
 #addPlayerBtn {
-  background-color: var(--sunglow);          /* #ffd166 */
+  background-color: var(--sunglow); /* #ffd166 */
 }
 #addPlayerBtn:hover {
-  background-color: #ffcc57; /* slightly darker or lighter shade */
+  background-color: #ffcc57;
 }
 
 #startGameBtn {
-  background-color: var(--emerald);          /* #06d6a0 */
+  background-color: var(--emerald); /* #06d6a0 */
 }
 #startGameBtn:hover {
   background-color: #05c094;
 }
 
 /* 
-  8) Player List (Add Player Section)
+  PLAYER LIST (Add Player Section)
 */
 .player-list {
   list-style: none;
@@ -216,18 +228,16 @@ nav {
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-/* Delete buttons on the player list */
 .player-list button {
   background-color: var(--bright-pink-crayola); /* #ef476f */
   border: none;
   padding: 5px 10px;
   font-size: 14px;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px;
   color: #fff;
   cursor: pointer;
 }
@@ -236,7 +246,7 @@ nav {
 }
 
 /* 
-  9) Game Area
+  GAME AREA
 */
 #game-area {
   display: none; /* hidden until Start Game */
@@ -250,7 +260,6 @@ nav {
   margin-bottom: 60px; /* space for bottom controls */
 }
 
-/* Lives List */
 #livesList {
   margin: 20px 0;
   width: 100%;
@@ -260,7 +269,7 @@ nav {
   font-size: 18px;
   margin: 5px 0;
   text-align: left;
-  border-radius: 25px; /* optional, if you want each list item also curved */
+  border-radius: 25px; 
 }
 
 /* Highlight the current player in the list */
@@ -272,11 +281,11 @@ nav {
   color: #333;
 }
 
-/* The RESET button below the lives list */
+/* RESET BUTTON (below the lives list) */
 #resetBtn {
   margin: 10px 5px;
   padding: 10px 20px;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px;
   color: #fff;
   font-size: 16px;
   border: none;
@@ -288,9 +297,8 @@ nav {
   background-color: #0f7b9f;
 }
 
-/*
-  10) Fixed Buttons Dock at Bottom
-  (POT, MISS, BONUS, SHUFFLE)
+/* 
+  FIXED BUTTONS DOCK (POT, MISS, BONUS, SHUFFLE)
 */
 .game-controls {
   position: fixed;
@@ -306,48 +314,49 @@ nav {
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   height: 60px;
 }
+
 .game-controls button {
   flex-grow: 1;
   padding: 10px;
   font-size: 16px;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px;
   color: #fff;
   border: none;
   cursor: pointer;
 }
 
-/* Assign colors from your palette to each control button */
+/* POT / MISS / BONUS / SHUFFLE colors */
 #potBtn {
-  background-color: var(--emerald); /* #06d6a0 */
+  background-color: var(--emerald);
 }
 #potBtn:hover {
   background-color: #05c094;
 }
 
 #missBtn {
-  background-color: var(--bright-pink-crayola); /* #ef476f */
+  background-color: var(--bright-pink-crayola);
 }
 #missBtn:hover {
   background-color: #e33e65;
 }
 
 #bonusBtn {
-  background-color: var(--sunglow); /* #ffd166 */
-  color: #333;  /* better contrast on yellow */
+  background-color: var(--sunglow);
+  color: #333;
 }
 #bonusBtn:hover {
   background-color: #ffcc57;
 }
 
 #shuffleBtn {
-  background-color: var(--blue-ncs); /* #118ab2 */
+  background-color: var(--blue-ncs);
 }
 #shuffleBtn:hover {
   background-color: #0f7b9f;
 }
 
 /* 
-  11) Win Counter Page
+  WIN COUNTER PAGE
 */
 .scoreboard {
   padding: 20px;
@@ -379,7 +388,7 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* "Play Another Game" Button */
+/* PLAY ANOTHER GAME BUTTON */
 #playAnotherBtn {
   margin-top: 20px;
   padding: 10px 20px;
