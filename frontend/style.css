@@ -8,20 +8,35 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Use min-height so we can scroll if needed */
-    /* Remove or comment out the overflow: hidden if you'd like the body to scroll:
-       overflow: hidden; 
-    */
+    min-height: 100vh; /* So the page can scroll if needed */
 }
 
+/* Custom Fonts for Home Page */
+.main-title, .subtext {
+    font-family: 'Rubik Mono One', sans-serif; /* Use your Google Font here */
+}
+
+/* Specific Home Page Title & Subtext styling */
+.main-title {
+    font-size: 3rem;       /* Adjust to your liking */
+    margin: 40px 0 10px;
+    color: #333;
+}
+.subtext {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #666;
+}
+
+/* Headings */
 h1, h2, h3 {
     margin: 20px 0;
     color: #444;
 }
 
-/* Navigation */
+/* Navigation: fixed at top */
 nav {
-    position: fixed;       /* Sticks the nav to the top */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -29,7 +44,7 @@ nav {
     color: #fff;
     padding: 10px;
     text-align: left;
-    z-index: 999;         /* Ensures nav is on top of other elements */
+    z-index: 999; /* Ensures nav is above other content */
 }
 
 .burger-menu {
@@ -39,6 +54,7 @@ nav {
     color: #fff;
 }
 
+/* Dropdown Menu */
 .menu {
     position: absolute;
     top: 50px;
@@ -74,8 +90,7 @@ nav {
 .page {
     display: none;
     padding: 20px;
-    /* Ensures content is pushed below the fixed nav bar */
-    margin-top: 60px;  /* The nav is ~50px high; adjust if needed */
+    margin-top: 60px; /* So content doesn't hide under fixed nav */
 }
 .page:not(.hidden) {
     display: block;
@@ -108,12 +123,13 @@ nav {
     color: white;
     font-size: 16px;
     border: none;
+    transition: background-color 0.2s ease-in-out;
 }
 #setup button:hover {
     background-color: #45a049;
 }
 
-/* Styling the player list */
+/* Player List Styles */
 .player-list {
     list-style: none;
     padding: 0;
@@ -141,22 +157,22 @@ nav {
     border-radius: 5px;
     color: white;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 .player-list button:hover {
     background-color: #d81b60;
 }
 
-/* Play Game Area */
+/* Game Area */
 #game-area {
-    /* Take up the remaining vertical space except the docked buttons */
-    flex: 1;
+    flex: 1; /* Fill the remaining vertical space */
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    overflow-y: auto; 
-    margin-bottom: 60px;
+    overflow-y: auto; /* Allow scrolling if needed */
+    margin-bottom: 60px; /* Space for the fixed bottom bar */
 }
 #livesList {
     margin: 20px 0;
@@ -168,7 +184,7 @@ nav {
     margin: 0;
 }
 
-/* Highlight the current player in the list */
+/* Highlight the current player */
 .highlight {
     background-color: #ffeb3b;
     font-weight: bold;
@@ -184,7 +200,7 @@ nav {
     text-align: left;
 }
 
-/* Buttons Docked at Bottom */
+/* Fixed Buttons Dock at Bottom */
 .game-controls {
     position: fixed;
     bottom: 0;
@@ -197,7 +213,7 @@ nav {
     gap: 10px;
     z-index: 100;
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-    height: 60px; /* Ensure buttons don't interfere with content above */
+    height: 60px;
 }
 .game-controls button {
     flex-grow: 1;
@@ -208,12 +224,13 @@ nav {
     color: white;
     border: none;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 .game-controls button:hover {
     background-color: #45a049;
 }
 
-/* Full-Screen Scoreboard Styling for Mobile */
+/* Scoreboard on Win Counter Page */
 .scoreboard {
     padding: 20px;
     margin-top: 20px;
@@ -232,9 +249,8 @@ nav {
 .scoreboard ul {
     list-style: none;
     padding: 0;
-    margin: 0;
-    max-width: 300px;
     margin: 0 auto;
+    max-width: 300px;
 }
 .scoreboard li {
     padding: 10px;
@@ -245,7 +261,7 @@ nav {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Current Player Styling */
+/* Current Player Display */
 #currentPlayer {
     font-size: 24px;
     font-weight: bold;
@@ -253,7 +269,7 @@ nav {
     margin-bottom: 10px;
 }
 
-/* "Play Another Game" Button Styling */
+/* "Play Another Game" Button */
 #wins button {
     padding: 10px 20px;
     cursor: pointer;
@@ -265,6 +281,7 @@ nav {
     margin-top: 20px;
     width: calc(100% - 40px);
     max-width: 300px;
+    transition: background-color 0.2s ease-in-out;
 }
 #wins button:hover {
     background-color: #45a049;
