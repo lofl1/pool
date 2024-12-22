@@ -15,7 +15,7 @@
 
 body {
   font-family: 'Rubik', sans-serif;
-  font-weight: 500; /* Medium for normal text */
+  font-weight: 500; 
   font-size: 16px;
   line-height: 1.5;
   margin: 0;
@@ -25,12 +25,13 @@ body {
   color: #333;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* allows scrolling if needed */
+  min-height: 100vh; 
 }
 
-/* CHANGED: A custom class applied if iOS standalone is detected */
-body.standalone {
-  /* can place any global changes for standalone here if needed */
+/* Only if iOS standalone: We'll apply extra safe-area padding. */
+body.standalone .game-controls {
+  /* Increase this so the buttons are definitely clickable above the Home bar */
+  padding-bottom: calc(env(safe-area-inset-bottom) + 40px);
 }
 
 .hidden {
@@ -302,7 +303,7 @@ h2, h3 {
   color: #333;
 }
 
-/* RESET BUTTON (below the lives list) */
+/* RESET BUTTON */
 #resetBtn {
   margin: 10px 5px;
   padding: 10px 20px;
@@ -319,9 +320,8 @@ h2, h3 {
 }
 
 /* 
-  FIXED BUTTONS DOCK (POT, MISS, BONUS, UNDO)
+  FIXED BUTTONS DOCK 
 */
-/* Reverted to original: height = 60px, no safe-area adjustments */
 .game-controls {
   position: fixed;
   bottom: 0;
@@ -334,7 +334,7 @@ h2, h3 {
   gap: 10px;
   z-index: 100;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  height: 60px; /* Reverted back to a fixed height */
+  height: 60px; 
 }
 
 .game-controls button {
@@ -429,14 +429,7 @@ h2, h3 {
 }
 
 /* 
-  MOBILE MEDIA QUERY
-  (Only emojis on POT/MISS/BONUS/UNDO)
+  REMOVED MEDIA QUERY:
+  So that all buttons ALWAYS have the text + emoji. 
+  No more conditional removal. 
 */
-@media (max-width: 600px) {
-  #potBtn, #missBtn, #bonusBtn, #undoBtn {
-    font-size: 0;             /* hide original text */
-    position: relative;
-  }
-  #potBtn::before {
-    content: "✅";
-    font-size: 1.2rem;
