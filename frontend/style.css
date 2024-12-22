@@ -1,6 +1,16 @@
-/* General Styling */
+/* 
+  Font usage:
+  1) Rubik Mono One for h1
+  2) Rubik 700 (Bold) for h2, h3
+  3) Rubik 500 (Medium) for body text
+*/
+
+/* Body text: Rubik (Medium, 500) */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Rubik', sans-serif; /* fallback: sans-serif */
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -8,30 +18,35 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* So the page can scroll if needed */
+    min-height: 100vh; /* so the page can scroll if needed */
 }
 
-/* Custom Fonts for Home Page */
-.main-title, .subtext {
-    font-family: 'Rubik Mono One', sans-serif; /* Use your Google Font here */
-}
-
-/* Specific Home Page Title & Subtext styling */
-.main-title {
-    font-size: 3rem;       /* Adjust to your liking */
-    margin: 40px 0 10px;
+/* h1: Rubik Mono One (400) */
+h1 {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-weight: 400; /* Rubik Mono One typically has just one main weight */
+    font-size: 3rem;
+    margin: 40px 0 20px;
     color: #333;
-}
-.subtext {
-    font-size: 1.2rem;
-    margin: 0;
-    color: #666;
+    text-align: center;
 }
 
-/* Headings */
-h1, h2, h3 {
-    margin: 20px 0;
+/* h2 & h3: Rubik (700, Bold) */
+h2, h3 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
     color: #444;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Subtext or paragraphs can use Rubik (500) */
+.subtext, p {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
 }
 
 /* Navigation: fixed at top */
@@ -44,7 +59,7 @@ nav {
     color: #fff;
     padding: 10px;
     text-align: left;
-    z-index: 999; /* Ensures nav is above other content */
+    z-index: 999; /* ensures nav is above other content */
 }
 
 .burger-menu {
@@ -90,7 +105,7 @@ nav {
 .page {
     display: none;
     padding: 20px;
-    margin-top: 60px; /* So content doesn't hide under fixed nav */
+    margin-top: 60px; /* so content doesn't hide under fixed nav */
 }
 .page:not(.hidden) {
     display: block;
@@ -129,7 +144,7 @@ nav {
     background-color: #45a049;
 }
 
-/* Player List Styles */
+/* Styling the player list */
 .player-list {
     list-style: none;
     padding: 0;
@@ -138,6 +153,7 @@ nav {
     max-width: 300px;
     text-align: left;
 }
+
 .player-list li {
     display: flex;
     justify-content: space-between;
@@ -163,16 +179,16 @@ nav {
     background-color: #d81b60;
 }
 
-/* Game Area */
+/* Play Game Area */
 #game-area {
-    flex: 1; /* Fill the remaining vertical space */
+    flex: 1; /* fill the remaining vertical space */
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    overflow-y: auto; /* Allow scrolling if needed */
-    margin-bottom: 60px; /* Space for the fixed bottom bar */
+    overflow-y: auto;
+    margin-bottom: 60px; /* space for the fixed bottom bar */
 }
 #livesList {
     margin: 20px 0;
@@ -184,7 +200,7 @@ nav {
     margin: 0;
 }
 
-/* Highlight the current player */
+/* Highlight the current player in the list */
 .highlight {
     background-color: #ffeb3b;
     font-weight: bold;
@@ -200,7 +216,7 @@ nav {
     text-align: left;
 }
 
-/* Fixed Buttons Dock at Bottom */
+/* Buttons Docked at Bottom */
 .game-controls {
     position: fixed;
     bottom: 0;
@@ -224,13 +240,12 @@ nav {
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
 .game-controls button:hover {
     background-color: #45a049;
 }
 
-/* Scoreboard on Win Counter Page */
+/* Full-Screen Scoreboard Styling for Mobile */
 .scoreboard {
     padding: 20px;
     margin-top: 20px;
@@ -242,6 +257,8 @@ nav {
 
 .scoreboard h3 {
     margin-bottom: 20px;
+    font-family: 'Rubik', sans-serif; /* keep h3 consistent with subheadings if you like */
+    font-weight: 700;
     font-size: 24px;
     color: #333;
 }
@@ -261,21 +278,21 @@ nav {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Current Player Display */
+/* Current Player Styling */
 #currentPlayer {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 700; /* bold for emphasis */
     color: #e91e63;
     margin-bottom: 10px;
 }
 
-/* "Play Another Game" Button */
+/* "Play Another Game" Button Styling */
 #wins button {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     background-color: #4caf50;
-    color: white;
+    color: #fff;
     font-size: 16px;
     border: none;
     margin-top: 20px;
