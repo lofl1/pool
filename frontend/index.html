@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>Killer Pool 🎱</title>
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font: Rubik Mono One -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Link to your external stylesheet -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <!-- Burger Menu Navigation -->
@@ -19,8 +30,8 @@
 
     <!-- Home Page -->
     <div id="home" class="page">
-        <h1>🎱 KILLER POOL</h1>
-        <p>Welcome to the ultimate pool game tracker! 🕹️</p>
+        <h1 class="main-title">Killer Pool</h1>
+        <p class="subtext">Made by Lofl</p>
     </div>
 
     <!-- Play Game Page -->
@@ -28,7 +39,7 @@
         <h2>🎮 Play Game</h2>
         <div id="setup">
             <h3>👥 Add Players</h3>
-            <input type="text" id="playerName" placeholder="Enter player name">
+            <input type="text" id="playerName" placeholder="Enter player name" />
             <button onclick="addPlayer()">➕ Add Player</button>
             <ul id="playerList" class="player-list"></ul>
             <button onclick="startGame()">🚀 Start Game</button>
@@ -55,6 +66,7 @@
         <button onclick="showPage('game')">🔄 Play Another Game</button>
     </div>
 
+    <!-- Your JavaScript file -->
     <script src="script.js"></script>
 </body>
 </html>
