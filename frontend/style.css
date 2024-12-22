@@ -1,47 +1,63 @@
+/* 
+ * Apple-inspired CSS
+ * ------------------------------------------------------------------
+ * Font stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 
+ *             Helvetica, Arial, sans-serif
+ * Subtle shadows, light backgrounds, simple color palette
+ */
+
 /* General Styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
     text-align: center;
-    background-color: #f5f5f5;
+    /* A crisp white background feels more Apple-like */
+    background-color: #fff;
     color: #333;
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full height for mobile screens */
-    overflow: hidden; /* Prevent scrolling during gameplay */
+    min-height: 100vh; /* ensure it fills vertical space on mobile */
+    overflow: hidden;  /* prevent scrolling during gameplay */
 }
+
+/* Heading styles: use subtle color and spacing */
 h1, h2, h3 {
     margin: 20px 0;
-    color: #444;
+    color: #333; /* slightly darker for headings */
+    font-weight: 600; /* a bit bolder */
 }
 
 /* Navigation */
 nav {
     position: relative;
-    background-color: #444;
-    color: #fff;
+    background-color: #fafafa; /* lighter background */
+    color: #333;
     padding: 10px;
     text-align: left;
+    border-bottom: 1px solid #e0e0e0; /* subtle bottom border */
 }
+
 .burger-menu {
     font-size: 24px;
     cursor: pointer;
     display: inline-block;
-    color: #fff;
+    color: #007aff; /* an Apple-like blue for icon/links */
 }
+
 .menu {
     position: absolute;
     top: 50px;
     left: 10px;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     text-align: left;
     padding: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* a subtler shadow */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 .menu.hidden {
     display: none;
@@ -49,15 +65,16 @@ nav {
 .menu button {
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     margin: 5px 0;
     cursor: pointer;
     text-align: left;
     color: #333;
+    padding: 8px 12px;
+    border-radius: 4px;
 }
 .menu button:hover {
-    background-color: #f0f0f0;
-    border-radius: 4px;
+    background-color: #f7f7f7;
 }
 
 /* Page Layout */
@@ -92,13 +109,14 @@ nav {
     margin: 10px 5px;
     cursor: pointer;
     border-radius: 5px;
-    background-color: #4caf50;
+    background-color: #007aff; /* Apple-esque blue button */
     color: white;
     font-size: 16px;
     border: none;
+    transition: background-color 0.2s ease-in-out;
 }
 #setup button:hover {
-    background-color: #45a049;
+    background-color: #005bb5; /* darker blue on hover */
 }
 
 /* Styling the player list */
@@ -115,60 +133,61 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
 }
 .player-list button {
-    background-color: #e91e63;
+    background-color: #ff3b30; /* Apple 'destructive' red */
     border: none;
     padding: 5px 10px;
     font-size: 14px;
     border-radius: 5px;
     color: white;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 .player-list button:hover {
-    background-color: #d81b60;
+    background-color: #d6342a;
 }
 
 /* Play Game Area */
 #game-area {
-    flex: 1; /* Take up all available space except for the docked buttons */
+    flex: 1; /* fill remaining vertical space */
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    overflow-y: auto; /* Allow scrolling if needed */
-    margin-bottom: 60px; /* Ensure enough space above the docked buttons */
+    overflow-y: auto; 
+    margin-bottom: 60px; 
 }
 #livesList {
     margin: 20px 0;
     width: 100%;
 }
 #livesList, .player-list {
-    list-style: none; /* Remove bullet points */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 /* Highlight the current player in the list */
 .highlight {
-    background-color: #ffeb3b; /* Yellow background for highlighting */
+    background-color: #ffe680; /* subtle highlight */
     font-weight: bold;
     border-radius: 5px;
     padding: 5px;
-    color: #333; /* Dark text for readability */
+    color: #333;
 }
 
 /* Lives List Styling */
 #livesList li {
     font-size: 18px;
     margin: 5px 0;
-    text-align: left; /* Align names and hearts */
+    text-align: left;
 }
 
 /* Buttons Docked at Bottom */
@@ -177,27 +196,29 @@ nav {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #444;
+    background-color: #fafafa;
+    border-top: 1px solid #e0e0e0; /* subtle line at top */
     padding: 10px;
     display: flex;
     justify-content: space-around;
     gap: 10px;
     z-index: 100;
-    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-    height: 60px; /* Ensure buttons don't interfere with content above */
+    height: 60px;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05); /* subtle upward shadow */
 }
 .game-controls button {
     flex-grow: 1;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
-    background-color: #4caf50;
+    background-color: #007aff;
     color: white;
     border: none;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 .game-controls button:hover {
-    background-color: #45a049;
+    background-color: #005bb5;
 }
 
 /* Full-Screen Scoreboard Styling for Mobile */
@@ -205,9 +226,10 @@ nav {
     padding: 20px;
     margin-top: 20px;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* minimal shadow */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .scoreboard h3 {
@@ -219,24 +241,23 @@ nav {
 .scoreboard ul {
     list-style: none;
     padding: 0;
-    margin: 0;
-    max-width: 300px;
     margin: 0 auto;
+    max-width: 300px;
 }
 .scoreboard li {
     padding: 10px;
     margin-bottom: 10px;
     font-size: 18px;
-    background-color: #f9f9f9;
+    background-color: #fafafa;
     border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 /* Current Player Styling */
 #currentPlayer {
     font-size: 24px;
-    font-weight: bold;
-    color: #e91e63;
+    font-weight: 600;
+    color: #007aff; /* matches button color */
     margin-bottom: 10px;
 }
 
@@ -245,14 +266,15 @@ nav {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
-    background-color: #4caf50;
+    background-color: #007aff;
     color: white;
     font-size: 16px;
     border: none;
     margin-top: 20px;
     width: calc(100% - 40px);
     max-width: 300px;
+    transition: background-color 0.2s ease-in-out;
 }
 #wins button:hover {
-    background-color: #45a049;
+    background-color: #005bb5;
 }
