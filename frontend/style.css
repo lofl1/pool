@@ -28,9 +28,10 @@ body {
   min-height: 100vh; 
 }
 
-/* CHANGED: Only add extra bottom padding if .standalone on iOS */
+/* Only add extra bottom padding if .standalone on iOS */
 body.standalone .game-controls {
-  padding-bottom: calc(env(safe-area-inset-bottom) + 60px); /* Increased to ensure buttons are clickable */
+  /* CHANGED: reduced bottom inset to avoid cutting off the buttons. */
+  padding-bottom: calc(env(safe-area-inset-bottom) + 15px);
 }
 
 .hidden {
@@ -320,6 +321,7 @@ h2, h3 {
 /* 
   FIXED BUTTONS DOCK
 */
+/* CHANGED: removed fixed 60px height; added align-items:center. */
 .game-controls {
   position: fixed;
   bottom: 0;
@@ -328,11 +330,11 @@ h2, h3 {
   background-color: #444;
   padding: 10px;
   display: flex;
+  align-items: center;  /* vertically center the buttons */
   justify-content: space-around;
   gap: 10px;
   z-index: 100;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  height: 60px;
 }
 
 .game-controls button {
@@ -425,8 +427,3 @@ h2, h3 {
 #playAnotherBtn:hover {
   background-color: #05c094;
 }
-
-/* 
-  No media query needed, 
-  we always want text + emoji on the game controls.
-*/
