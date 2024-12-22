@@ -2,11 +2,11 @@
   1) Define your color palette as CSS variables
 */
 :root {
-  --bright-pink-crayola: #ef476f; /* e.g. for MISS, delete, etc. */
-  --sunglow: #ffd166;            /* e.g. for Add Player, BONUS, etc. */
-  --emerald: #06d6a0;            /* e.g. for Start Game, POT, etc. */
-  --blue-ncs: #118ab2;           /* e.g. for Shuffle, Reset, etc. */
-  --midnight-green: #073b4c;     /* If you wish to use for the nav or accent */
+  --bright-pink-crayola: #ef476f; 
+  --sunglow: #ffd166;            
+  --emerald: #06d6a0;            
+  --blue-ncs: #118ab2;           
+  --midnight-green: #073b4c;     
 }
 
 * {
@@ -64,9 +64,8 @@ nav {
   transform: translate(-50%, -50%);
   margin: 0;
   font-family: 'Rubik Mono One', sans-serif;
-  font-weight: 400; /* This font often has a single main weight */
+  font-weight: 400;
   color: #fff;
-  /* Use clamp() to scale text from small on phones to bigger on desktops */
   font-size: clamp(1rem, 5vw, 2rem);
   white-space: nowrap; 
 }
@@ -96,7 +95,7 @@ nav {
   text-align: left;
   color: #333;
   padding: 8px 12px;
-  border-radius: 25px; /* extra rounded corners for consistent style */
+  border-radius: 25px; 
 }
 .menu button:hover {
   background-color: #f0f0f0;
@@ -119,7 +118,7 @@ nav {
 */
 h1 {
   font-family: 'Rubik Mono One', sans-serif;
-  font-weight: 400; /* Rubik Mono One typically has one main weight */
+  font-weight: 400; 
   font-size: 3rem;
   margin: 40px 0 20px;
   color: #333;
@@ -139,6 +138,20 @@ h2, h3 {
   font-size: 1rem;
   color: #666;
   margin-bottom: 1.5rem;
+}
+
+/* Large black Start Game button on the home page */
+#homeStartGameBtn {
+  background-color: #000;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 25px; 
+  cursor: pointer;
+}
+#homeStartGameBtn:hover {
+  background-color: #333;
 }
 
 /* 
@@ -179,7 +192,7 @@ h2, h3 {
   font-size: 16px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 25px; /* extra rounded corners */
+  border-radius: 25px; 
   width: 80%;
   max-width: 300px;
 }
@@ -197,14 +210,22 @@ h2, h3 {
 }
 
 #addPlayerBtn {
-  background-color: var(--sunglow); /* #ffd166 */
+  background-color: var(--sunglow); 
 }
 #addPlayerBtn:hover {
   background-color: #ffcc57;
 }
 
+/* The new shuffle button is here (moved from bottom bar) */
+#shuffleBtn {
+  background-color: var(--blue-ncs);
+}
+#shuffleBtn:hover {
+  background-color: #0f7b9f;
+}
+
 #startGameBtn {
-  background-color: var(--emerald); /* #06d6a0 */
+  background-color: var(--emerald);
 }
 #startGameBtn:hover {
   background-color: #05c094;
@@ -228,12 +249,12 @@ h2, h3 {
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 25px;
+  border-radius: 25px; 
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .player-list button {
-  background-color: var(--bright-pink-crayola); /* #ef476f */
+  background-color: var(--bright-pink-crayola);
   border: none;
   padding: 5px 10px;
   font-size: 14px;
@@ -249,14 +270,13 @@ h2, h3 {
   GAME AREA
 */
 #game-area {
-  display: none; /* hidden until Start Game */
+  display: none; 
 }
 #game-area:not(.hidden) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Extra top padding so it's not cut off by the banner */
-  padding-top: 90px;
+  padding-top: 90px;   /* Extra top padding so it's not cut off by the banner */
   margin-bottom: 60px; /* space for bottom controls */
 }
 
@@ -290,7 +310,7 @@ h2, h3 {
   font-size: 16px;
   border: none;
   cursor: pointer;
-  background-color: var(--blue-ncs); /* #118ab2 */
+  background-color: var(--blue-ncs); 
   transition: background-color 0.2s ease-in-out;
 }
 #resetBtn:hover {
@@ -298,7 +318,7 @@ h2, h3 {
 }
 
 /* 
-  FIXED BUTTONS DOCK (POT, MISS, BONUS, SHUFFLE)
+  FIXED BUTTONS DOCK (POT, MISS, BONUS, UNDO)
 */
 .game-controls {
   position: fixed;
@@ -325,7 +345,7 @@ h2, h3 {
   cursor: pointer;
 }
 
-/* POT / MISS / BONUS / SHUFFLE colors */
+/* POT / MISS / BONUS / UNDO colors */
 #potBtn {
   background-color: var(--emerald);
 }
@@ -348,11 +368,11 @@ h2, h3 {
   background-color: #ffcc57;
 }
 
-#shuffleBtn {
-  background-color: var(--blue-ncs);
+#undoBtn {
+  background-color: #000;  /* Black for undo? or you can pick another color */
 }
-#shuffleBtn:hover {
-  background-color: #0f7b9f;
+#undoBtn:hover {
+  background-color: #333;
 }
 
 /* 
