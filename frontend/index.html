@@ -36,7 +36,7 @@
 
   <!-- Play Game Page -->
   <div id="game" class="page hidden">
-    <!-- Heading for the page (we'll hide this in JS once the game starts) -->
+    <!-- Heading for the page (hidden in JS once the game starts) -->
     <h2>🎮 Play Game</h2>
 
     <!-- Fixed banner for the current player's name (hidden until Start Game) -->
@@ -44,13 +44,15 @@
       <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
     </div>
 
-    <!-- Add Players Section (visible until Start Game) -->
+    <!-- Add Players Section -->
     <div id="setup">
       <h3>👥 Add Players</h3>
       <input type="text" id="playerName" placeholder="Enter player name" />
       <button onclick="addPlayer()">➕ Add Player</button>
       <ul id="playerList" class="player-list"></ul>
       <button onclick="startGame()">🚀 Start Game</button>
+      <!-- New Reset button to go back to 'add player' screen -->
+      <button onclick="resetToAddPlayer()">🔄 Reset</button>
     </div>
 
     <!-- Main game area (hidden until Start Game) -->
