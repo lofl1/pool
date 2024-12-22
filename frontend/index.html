@@ -7,23 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Burger Menu Navigation -->
     <nav>
         <div class="burger-menu" onclick="toggleMenu()">☰</div>
         <div id="menu" class="menu hidden">
             <button onclick="showPage('home')">🏠 Home</button>
             <button onclick="showPage('game')">🎮 Play Game</button>
             <button onclick="showPage('wins')">🏆 Win Counter</button>
+            <button onclick="showPage('history'); updateHistoryPage()">📜 History</button>
         </div>
     </nav>
 
-    <!-- Home Page -->
     <div id="home" class="page">
         <h1>🎱 KILLER POOL</h1>
         <p>Welcome to the ultimate pool game tracker! 🕹️</p>
     </div>
 
-    <!-- Play Game Page -->
     <div id="game" class="page hidden">
         <h2>🎮 Play Game</h2>
         <div id="setup">
@@ -45,14 +43,17 @@
         </div>
     </div>
 
-    <!-- Win Counter Page -->
     <div id="wins" class="page hidden">
         <h2>🏆 Win Counter</h2>
         <div class="scoreboard">
-            <h3>📊 Total Wins</h3>
+            <h3>📊 Total Wins (Today)</h3>
             <ul id="scoreboard"></ul>
         </div>
-        <button onclick="showPage('game')">🔄 Play Another Game</button>
+    </div>
+
+    <div id="history" class="page hidden">
+        <h2>📜 History</h2>
+        <div id="historyRecords"></div>
     </div>
 
     <script src="script.js"></script>
