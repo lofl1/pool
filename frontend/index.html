@@ -25,15 +25,14 @@
 
     <!-- Play Game Page -->
     <div id="game" class="page hidden">
-        <h2>🎮 Play Game</h2>
-        <div id="setup">
+        <div id="setup" class="fullscreen">
             <h3>👥 Add Players</h3>
             <input type="text" id="playerName" placeholder="Enter player name">
             <button onclick="addPlayer()">➕ Add Player</button>
             <ul id="playerList" class="player-list"></ul>
             <button onclick="startGame()">🚀 Start Game</button>
         </div>
-        <div id="game-area" class="hidden">
+        <div id="game-area" class="fullscreen hidden">
             <h3>🎱 Current Player: <span id="currentPlayer"></span></h3>
             <ul id="livesList" class="player-list"></ul>
             <div class="game-controls">
