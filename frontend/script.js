@@ -17,7 +17,7 @@ document.querySelectorAll('#menu button').forEach(button => {
     button.addEventListener('click', closeMenu);
 });
 
-// CHANGED: detect if running in standalone mode and add a class to body
+// CHANGED: Detect if running in standalone mode (installed to home screen)
 if (window.navigator.standalone === true) {
     document.body.classList.add('standalone');
 }
@@ -44,7 +44,6 @@ function addPlayer() {
     }
 }
 
-// Shuffle the PLAYERS array in the add-players screen
 function shufflePlayers() {
     players.sort(() => Math.random() - 0.5);
     updatePlayerList();
@@ -95,7 +94,6 @@ function startGame() {
 
 /** ========== GAME ACTIONS ========== **/
 
-// Update the UI (current player's name & lives list)
 function updateGameUI() {
     if (currentPlayers.length === 0) {
         resetGamePage();
@@ -105,7 +103,6 @@ function updateGameUI() {
     const currentPlayer = currentPlayers[currentIndex];
     document.getElementById("currentPlayer").textContent = currentPlayer.name;
 
-    // Highlight current player in the lives list
     const livesList = document.getElementById("livesList");
     livesList.innerHTML = currentPlayers.map((player, i) => {
         const highlightClass = i === currentIndex ? 'highlight' : '';
@@ -133,7 +130,6 @@ function nextPlayer() {
 }
 
 function pot() {
-    // Store last action
     lastAction = {
         playerIndex: currentIndex,
         prevLives: currentPlayers[currentIndex].lives,
@@ -147,8 +143,6 @@ function pot() {
 
 function miss() {
     const oldLives = currentPlayers[currentIndex].lives;
-
-    // Store last action
     lastAction = {
         playerIndex: currentIndex,
         prevLives: oldLives,
@@ -156,11 +150,9 @@ function miss() {
         prevIndex: currentIndex
     };
 
-    // Lose a life
     currentPlayers[currentIndex].lives--;
     lastAction.newLives = currentPlayers[currentIndex].lives;
 
-    // Check if player is out
     if (currentPlayers[currentIndex].lives <= 0) {
         alert(`${currentPlayers[currentIndex].name} is out! ❌`);
         currentPlayers.splice(currentIndex, 1);
@@ -173,8 +165,6 @@ function miss() {
 
 function bonus() {
     const oldLives = currentPlayers[currentIndex].lives;
-
-    // Store last action
     lastAction = {
         playerIndex: currentIndex,
         prevLives: oldLives,
@@ -182,17 +172,13 @@ function bonus() {
         prevIndex: currentIndex
     };
 
-    // Gain a life
     currentPlayers[currentIndex].lives++;
     lastAction.newLives = currentPlayers[currentIndex].lives;
-
     nextPlayer();
 }
 
 /** 
  * UNDO: Revert the latest action 
- * - Restores lives
- * - Restores currentIndex
  */
 function undoAction() {
     if (!lastAction) {
@@ -200,41 +186,24 @@ function undoAction() {
         return;
     }
 
-    const {
-        playerIndex,
-        prevLives,
-        newLives,
-        prevIndex,
-        actionType
-    } = lastAction;
+    const { playerIndex, prevLives, newLives, prevIndex, actionType } = lastAction;
 
-    // If the player was completely removed on a 'miss', a full restore is more complex.
     if (actionType === 'miss' && newLives < 1) {
-        alert("Undo not possible if a player was completely removed. (Simple approach)");
+        alert("Undo not possible if a player was removed. (Simple approach)");
         return;
     }
 
-    // Otherwise, revert that player's lives
     currentPlayers[playerIndex].lives = prevLives;
-
-    // Revert the currentIndex to the old turn
     currentIndex = prevIndex;
-
-    // Clean up lastAction
     lastAction = null;
-
-    // Refresh UI
     updateGameUI();
 }
 
 /** ========== RESET & NAVIGATION ========== **/
 
 function resetGamePage() {
-    // Show the "Play Game" heading again
     document.querySelector("#game h2").classList.remove("hidden");
-    // Show the setup section
     document.getElementById("setup").classList.remove("hidden");
-    // Hide the current player banner and game area
     document.getElementById("currentPlayerBanner").classList.add("hidden");
     document.getElementById("game-area").classList.add("hidden");
     document.getElementById("livesList").innerHTML = "";
@@ -247,8 +216,8 @@ function resetToAddPlayer() {
     if (!confirm("Are you sure you want to RESET the game?")) {
         return;
     }
-    resetGamePage();    
-    showPage('game'); // Remain on 'game' page with the setup
+    resetGamePage();
+    showPage('game');
 }
 
 // Scoreboard
@@ -263,10 +232,9 @@ function updateScoreboard() {
 }
 
 function showPage(pageId) {
-    // Hide all pages
     document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
-    // Show the target page
     document.getElementById(pageId).classList.remove('hidden');
+
     if (pageId === 'wins') {
         updateScoreboard();
     }
