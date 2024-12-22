@@ -4,12 +4,14 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
-    background-color: #f5f5f5;  /* Light neutral background */
-    color: #333;                /* Dark text for readability */
+    background-color: #f5f5f5;
+    color: #333;
     display: flex;
     flex-direction: column;
-    height: 100vh;              /* Full height for mobile screens */
-    overflow: hidden;           /* Prevent scrolling during gameplay */
+    min-height: 100vh; /* Use min-height so we can scroll if needed */
+    /* Remove or comment out the overflow: hidden if you'd like the body to scroll:
+       overflow: hidden; 
+    */
 }
 
 h1, h2, h3 {
@@ -19,11 +21,15 @@ h1, h2, h3 {
 
 /* Navigation */
 nav {
-    position: relative;
-    background-color: #333;     /* A shade darker for a clean nav look */
+    position: fixed;       /* Sticks the nav to the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #333;
     color: #fff;
     padding: 10px;
     text-align: left;
+    z-index: 999;         /* Ensures nav is on top of other elements */
 }
 
 .burger-menu {
@@ -44,8 +50,7 @@ nav {
     flex-direction: column;
     text-align: left;
     padding: 10px;
-    /* Soft box-shadow for a cleaner feel */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 .menu.hidden {
     display: none;
@@ -63,13 +68,14 @@ nav {
 }
 .menu button:hover {
     background-color: #f0f0f0;
-    border-radius: 4px;
 }
 
 /* Page Layout */
 .page {
     display: none;
     padding: 20px;
+    /* Ensures content is pushed below the fixed nav bar */
+    margin-top: 60px;  /* The nav is ~50px high; adjust if needed */
 }
 .page:not(.hidden) {
     display: block;
@@ -99,10 +105,9 @@ nav {
     cursor: pointer;
     border-radius: 5px;
     background-color: #4caf50;
-    color: #fff;
+    color: white;
     font-size: 16px;
     border: none;
-    transition: background-color 0.2s ease-in-out;
 }
 #setup button:hover {
     background-color: #45a049;
@@ -126,8 +131,7 @@ nav {
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 10px;
-    /* Subtle shadow for a professional look */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 .player-list button {
     background-color: #e91e63;
@@ -137,7 +141,6 @@ nav {
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
 .player-list button:hover {
     background-color: #d81b60;
@@ -145,39 +148,40 @@ nav {
 
 /* Play Game Area */
 #game-area {
-    flex: 1;                    /* Take up all remaining space except the bottom bar */
+    /* Take up the remaining vertical space except the docked buttons */
+    flex: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    overflow-y: auto;           /* Allow scrolling if needed */
-    margin-bottom: 60px;        /* Leave room for fixed bottom buttons */
+    overflow-y: auto; 
+    margin-bottom: 60px;
 }
 #livesList {
     margin: 20px 0;
     width: 100%;
 }
 #livesList, .player-list {
-    list-style: none;           /* Remove bullet points */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 /* Highlight the current player in the list */
 .highlight {
-    background-color: #ffeb3b;  /* Eye-catching highlight */
+    background-color: #ffeb3b;
     font-weight: bold;
     border-radius: 5px;
     padding: 5px;
-    color: #333;                /* Dark text on light background */
+    color: #333;
 }
 
 /* Lives List Styling */
 #livesList li {
     font-size: 18px;
     margin: 5px 0;
-    text-align: left;           /* Align names and hearts */
+    text-align: left;
 }
 
 /* Buttons Docked at Bottom */
@@ -192,8 +196,8 @@ nav {
     justify-content: space-around;
     gap: 10px;
     z-index: 100;
-    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
-    height: 60px;               /* Ensures buttons are separated from above content */
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+    height: 60px; /* Ensure buttons don't interfere with content above */
 }
 .game-controls button {
     flex-grow: 1;
@@ -201,10 +205,9 @@ nav {
     font-size: 16px;
     border-radius: 5px;
     background-color: #4caf50;
-    color: #fff;
+    color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
 .game-controls button:hover {
     background-color: #45a049;
@@ -217,8 +220,7 @@ nav {
     text-align: center;
     background-color: #ffffff;
     border-radius: 10px;
-    /* Subtle shadow around scoreboard */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .scoreboard h3 {
@@ -232,7 +234,7 @@ nav {
     padding: 0;
     margin: 0;
     max-width: 300px;
-    margin: 0 auto; /* Center the scoreboard list */
+    margin: 0 auto;
 }
 .scoreboard li {
     padding: 10px;
@@ -240,7 +242,7 @@ nav {
     font-size: 18px;
     background-color: #f9f9f9;
     border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Current Player Styling */
@@ -257,13 +259,12 @@ nav {
     cursor: pointer;
     border-radius: 5px;
     background-color: #4caf50;
-    color: #fff;
+    color: white;
     font-size: 16px;
     border: none;
     margin-top: 20px;
     width: calc(100% - 40px);
     max-width: 300px;
-    transition: background-color 0.2s ease-in-out;
 }
 #wins button:hover {
     background-color: #45a049;
