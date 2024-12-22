@@ -45,9 +45,9 @@ function removePlayer(index) {
 function updatePlayerList() {
     const playerList = document.getElementById("playerList");
     playerList.innerHTML = players
-        .map((player, index) =>
+        .map((player, i) =>
             `<li>${player.name} 
-             <button onclick="removePlayer(${index})">❌ Delete</button>
+             <button onclick="removePlayer(${i})">❌ Delete</button>
              </li>`)
         .join("");
 }
@@ -59,7 +59,7 @@ function startGame() {
         return;
     }
     // Prepare a new list of players for the current game
-    currentPlayers = players.map(player => ({ name: player.name, lives: 3 }));
+    currentPlayers = players.map(p => ({ name: p.name, lives: 3 }));
     currentIndex = 0; // Start with the first player
 
     // Hide the setup section & "Play Game" heading
@@ -93,8 +93,8 @@ function updateGameUI() {
     // Build the lives list
     const livesList = document.getElementById("livesList");
     livesList.innerHTML = currentPlayers
-        .map((player, index) => {
-            const highlightClass = (index === currentIndex) ? 'highlight' : '';
+        .map((player, i) => {
+            const highlightClass = (i === currentIndex) ? 'highlight' : '';
             return `<li class="${highlightClass}">
                         ${player.name}: ${"❤️".repeat(player.lives)}
                     </li>`;
@@ -187,11 +187,9 @@ function showPage(pageId) {
 
 /* 
  * NEW FUNCTION: "resetToAddPlayer()" 
- * This just calls resetGamePage() and then 
- * ensures we stay on the 'game' page with 
- * the setup area visible.
+ * Called by the new Reset button below the player list
  */
 function resetToAddPlayer() {
-    resetGamePage();    // Puts the screen back to the initial add-player state
-    showPage('game');   // Make sure we're on the game page
+    resetGamePage();    
+    showPage('game');   // Force the user to stay on the 'game' page with the setup
 }
