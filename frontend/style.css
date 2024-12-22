@@ -1,8 +1,8 @@
 /* 
   Font usage:
   1) Rubik Mono One for h1
-  2) Rubik 700 (Bold) for h2, h3
-  3) Rubik 500 (Medium) for body text
+  2) Rubik (700) for h2, h3
+  3) Rubik (500) for body text
 */
 
 /* Body text: Rubik (Medium, 500) */
@@ -18,13 +18,13 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* so the page can scroll if needed */
+    min-height: 100vh;
 }
 
 /* h1: Rubik Mono One (400) */
 h1 {
     font-family: 'Rubik Mono One', sans-serif;
-    font-weight: 400; /* Rubik Mono One typically has just one main weight */
+    font-weight: 400;
     font-size: 3rem;
     margin: 40px 0 20px;
     color: #333;
@@ -108,6 +108,23 @@ nav {
     margin-top: 60px; /* so content doesn't hide under fixed nav */
 }
 .page:not(.hidden) {
+    display: block;
+}
+
+/* Sticky Banner for Current Player */
+#currentPlayerBanner {
+    /* Hidden by default; we'll reveal it after startGame() */
+    display: none;
+
+    /* Position: sticky keeps it pinned under the nav when scrolling */
+    position: sticky;
+    top: 0;
+    background-color: #f5f5f5;
+    padding: 10px 0;
+    z-index: 5; /* above normal content but below the nav (which is z-index 999) */
+    border-bottom: 1px solid #ddd;
+}
+#currentPlayerBanner:not(.hidden) {
     display: block;
 }
 
@@ -209,13 +226,6 @@ nav {
     color: #333;
 }
 
-/* Lives List Styling */
-#livesList li {
-    font-size: 18px;
-    margin: 5px 0;
-    text-align: left;
-}
-
 /* Buttons Docked at Bottom */
 .game-controls {
     position: fixed;
@@ -257,7 +267,7 @@ nav {
 
 .scoreboard h3 {
     margin-bottom: 20px;
-    font-family: 'Rubik', sans-serif; /* keep h3 consistent with subheadings if you like */
+    font-family: 'Rubik', sans-serif; /* keep h3 consistent if you like */
     font-weight: 700;
     font-size: 24px;
     color: #333;
@@ -283,10 +293,10 @@ nav {
     font-size: 24px;
     font-weight: 700; /* bold for emphasis */
     color: #e91e63;
-    margin-bottom: 10px;
+    margin-left: 5px; /* small spacing after "Current Player:" */
 }
 
-/* "Play Another Game" Button Styling */
+/* "Play Another Game" Button */
 #wins button {
     padding: 10px 20px;
     cursor: pointer;
