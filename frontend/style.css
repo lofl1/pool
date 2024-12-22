@@ -28,6 +28,11 @@ body {
   min-height: 100vh; /* allows scrolling if needed */
 }
 
+/* CHANGED: A custom class applied if iOS standalone is detected */
+body.standalone {
+  /* can place any global changes for standalone here if needed */
+}
+
 .hidden {
   display: none !important;
 }
@@ -104,20 +109,9 @@ nav {
   PAGE LAYOUT
 */
 .page {
-  /* CHANGED: Add transitions for fade-in/out & slight slide */
-  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-  opacity: 1;
-  transform: translateY(0);
-
-  /* existing spacing below */
   display: none;
   padding: 20px;
-  margin-top: 110px; /* so the nav/banner doesn't overlap */
-}
-.page.hidden {
-  /* Fade it out and slide it down */
-  opacity: 0;
-  transform: translateY(20px);
+  margin-top: 110px; /* keep content below the nav and banner */
 }
 .page:not(.hidden) {
   display: block;
@@ -327,7 +321,7 @@ h2, h3 {
 /* 
   FIXED BUTTONS DOCK (POT, MISS, BONUS, UNDO)
 */
-/* CHANGED: Add safe-area-inset-bottom to accommodate the iPhone home bar */
+/* Reverted to original: height = 60px, no safe-area adjustments */
 .game-controls {
   position: fixed;
   bottom: 0;
@@ -335,14 +329,12 @@ h2, h3 {
   right: 0;
   background-color: #444;
   padding: 10px;
-  /* NEW: Extra safe area padding to avoid iPhone home bar overlap */
-  padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
   display: flex;
   justify-content: space-around;
   gap: 10px;
   z-index: 100;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  height: auto; /* let the padding define the height */
+  height: 60px; /* Reverted back to a fixed height */
 }
 
 .game-controls button {
@@ -448,35 +440,3 @@ h2, h3 {
   #potBtn::before {
     content: "✅";
     font-size: 1.2rem;
-  }
-  #missBtn::before {
-    content: "❌";
-    font-size: 1.2rem;
-  }
-  #bonusBtn::before {
-    content: "🎁";
-    font-size: 1.2rem;
-  }
-  #undoBtn::before {
-    content: "↩️";
-    font-size: 1.2rem;
-  }
-}
-
-/* 
-  NEW: Subtle pop animation for losing/gaining a life 
-*/
-@keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.animate-life {
-  animation: pop 0.5s ease-in-out;
-}
