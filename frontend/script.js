@@ -17,20 +17,17 @@ document.querySelectorAll('#menu button').forEach(button => {
     button.addEventListener('click', closeMenu);
 });
 
-// CHANGED: Detect if running in standalone mode (installed to home screen)
+// CHANGED: Detect if running in standalone mode (installed as a home screen app)
 if (window.navigator.standalone === true) {
     document.body.classList.add('standalone');
 }
 
 // Global Variables
-let players = [];            // All players added BEFORE game starts
-let currentPlayers = [];     // Active players in the current game
-let currentIndex = 0;        // Which player's turn it is
-let wins = {};               // Persistent wins tracking
-
-// We'll track the last action so we can UNDO it
-// e.g. { playerIndex, prevLives, newLives, prevIndex, actionType }
-let lastAction = null;
+let players = [];            
+let currentPlayers = [];     
+let currentIndex = 0;        
+let wins = {};               
+let lastAction = null;       
 
 /** ========== ADDING PLAYERS & SHUFFLING ========== **/
 
@@ -38,7 +35,7 @@ function addPlayer() {
     const playerName = document.getElementById("playerName").value.trim();
     if (playerName && !players.some(player => player.name === playerName)) {
         players.push({ name: playerName });
-        wins[playerName] = wins[playerName] || 0; // Ensure wins entry
+        wins[playerName] = wins[playerName] || 0; 
         updatePlayerList();
         document.getElementById("playerName").value = "";
     }
@@ -74,11 +71,9 @@ function startGame() {
         return;
     }
 
-    // currentPlayers is a fresh copy of players with 3 lives each
     currentPlayers = players.map(p => ({ name: p.name, lives: 3 }));
     currentIndex = 0;
 
-    // Hide the add-player area, show the game area
     document.getElementById("setup").classList.add("hidden");
     document.querySelector("#game h2").classList.add("hidden");
     document.getElementById("currentPlayerBanner").classList.remove("hidden");
@@ -112,11 +107,9 @@ function updateGameUI() {
     }).join("");
 }
 
-// Move to the next player
 function nextPlayer() {
     currentIndex = (currentIndex + 1) % currentPlayers.length;
 
-    // Check if only one player remains
     if (currentPlayers.length === 1) {
         const winner = currentPlayers[0].name;
         wins[winner]++;
@@ -137,7 +130,6 @@ function pot() {
         newLives: currentPlayers[currentIndex].lives, 
         prevIndex: currentIndex
     };
-    // No life change for a pot, just moves to next player
     nextPlayer();
 }
 
@@ -174,6 +166,7 @@ function bonus() {
 
     currentPlayers[currentIndex].lives++;
     lastAction.newLives = currentPlayers[currentIndex].lives;
+
     nextPlayer();
 }
 
@@ -196,6 +189,7 @@ function undoAction() {
     currentPlayers[playerIndex].lives = prevLives;
     currentIndex = prevIndex;
     lastAction = null;
+
     updateGameUI();
 }
 
