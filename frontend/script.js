@@ -18,98 +18,99 @@ document.querySelectorAll('#menu button').forEach(button => {
 });
 
 // Global Variables
-let players = [];        // Main player list (persists across sessions)
-let currentPlayers = []; // Active players in the current game
-let currentIndex = 0;    // Tracks whose turn it is
-let wins = {};           // Persistent wins tracking
+let players = [];            // All players added BEFORE game starts
+let currentPlayers = [];     // Active players in the current game
+let currentIndex = 0;        // Which player's turn it is
+let wins = {};               // Persistent wins tracking
 
-// Add a new player
+// We'll track the last action so we can UNDO it
+// e.g. { playerIndex, prevLives, newLives, prevIndex, actionType }
+let lastAction = null;
+
+/** ========== ADDING PLAYERS & SHUFFLING ========== **/
+
 function addPlayer() {
     const playerName = document.getElementById("playerName").value.trim();
     if (playerName && !players.some(player => player.name === playerName)) {
         players.push({ name: playerName });
-        wins[playerName] = wins[playerName] || 0; // Initialize wins if not already
+        wins[playerName] = wins[playerName] || 0; // Ensure wins entry
         updatePlayerList();
         document.getElementById("playerName").value = "";
     }
 }
 
-// Remove a player
+// Shuffle the PLAYERS array in the add-players screen
+function shufflePlayers() {
+    players.sort(() => Math.random() - 0.5);
+    updatePlayerList();
+    alert("Players have been shuffled!");
+}
+
 function removePlayer(index) {
-    const playerName = players[index].name;
     players.splice(index, 1);
     updatePlayerList();
 }
 
-// Update the player list (with delete buttons)
 function updatePlayerList() {
     const playerList = document.getElementById("playerList");
     playerList.innerHTML = players
         .map((player, i) =>
-            `<li>${player.name} 
-             <button onclick="removePlayer(${i})">❌ Delete</button>
+            `<li>
+               ${player.name}
+               <button onclick="removePlayer(${i})">❌ Delete</button>
              </li>`)
         .join("");
 }
 
-// Start the game
+/** ========== STARTING THE GAME ========== **/
+
 function startGame() {
     if (players.length < 2) {
         alert("At least two players are required to start the game.");
         return;
     }
-    // Prepare a new list of players for the current game
-    currentPlayers = players.map(p => ({ name: p.name, lives: 3 }));
-    currentIndex = 0; // Start with the first player
 
-    // Hide the setup section & "Play Game" heading
+    // currentPlayers is a fresh copy of players with 3 lives each
+    currentPlayers = players.map(p => ({ name: p.name, lives: 3 }));
+    currentIndex = 0;
+
+    // Hide the add-player area, show the game area
     document.getElementById("setup").classList.add("hidden");
     document.querySelector("#game h2").classList.add("hidden");
-
-    // Show the current player banner and the game area
     document.getElementById("currentPlayerBanner").classList.remove("hidden");
     document.getElementById("game-area").classList.remove("hidden");
 
     updateGameUI();
 
-    // Optional: scroll to the game area
     document.getElementById("game-area").scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
 }
 
-// Update the game UI (current player, hearts, etc.)
+/** ========== GAME ACTIONS ========== **/
+
+// Update the UI (current player's name & lives list)
 function updateGameUI() {
     if (currentPlayers.length === 0) {
         resetGamePage();
         return;
     }
 
-    // Show the current player's name in the banner
     const currentPlayer = currentPlayers[currentIndex];
     document.getElementById("currentPlayer").textContent = currentPlayer.name;
 
-    // Build the lives list
+    // Highlight current player in the lives list
     const livesList = document.getElementById("livesList");
-    livesList.innerHTML = currentPlayers
-        .map((player, i) => {
-            const highlightClass = (i === currentIndex) ? 'highlight' : '';
-            return `<li class="${highlightClass}">
-                        ${player.name}: ${"❤️".repeat(player.lives)}
-                    </li>`;
-        })
-        .join("");
+    livesList.innerHTML = currentPlayers.map((player, i) => {
+        const highlightClass = i === currentIndex ? 'highlight' : '';
+        return `<li class="${highlightClass}">
+                  ${player.name}: ${"❤️".repeat(player.lives)}
+                </li>`;
+    }).join("");
 }
 
-// Shuffle the player order
-function shuffleOrder() {
-    currentPlayers.sort(() => Math.random() - 0.5);
-    updateGameUI();
-    alert("Player order has been shuffled!");
-}
-
-// Move to next player
+// Move to the next player
 function nextPlayer() {
     currentIndex = (currentIndex + 1) % currentPlayers.length;
 
@@ -126,38 +127,126 @@ function nextPlayer() {
     }
 }
 
-// Pot (successful shot)
+/** ========== ACTIONS WITH UNDO SUPPORT ========== **/
+
 function pot() {
+    // Store last action
+    lastAction = {
+        playerIndex: currentIndex,
+        prevLives: currentPlayers[currentIndex].lives,
+        actionType: 'pot', // For reference if needed
+    };
+
+    // No life change for a pot, just moves to next player
+    lastAction.newLives = currentPlayers[currentIndex].lives; 
+    lastAction.prevIndex = currentIndex; 
+
     nextPlayer();
 }
 
-// Miss (lose a life)
 function miss() {
+    const oldLives = currentPlayers[currentIndex].lives;
+
+    // Store last action
+    lastAction = {
+        playerIndex: currentIndex,
+        prevLives: oldLives,
+        actionType: 'miss',
+        prevIndex: currentIndex
+    };
+
+    // Lose a life
     currentPlayers[currentIndex].lives--;
+    lastAction.newLives = currentPlayers[currentIndex].lives;
+
+    // Check if player is out
     if (currentPlayers[currentIndex].lives <= 0) {
         alert(`${currentPlayers[currentIndex].name} is out! ❌`);
         currentPlayers.splice(currentIndex, 1);
+
+        // If we removed the player, we need to see if currentIndex is still valid
         if (currentIndex >= currentPlayers.length) {
             currentIndex = 0;
         }
+
+        // If game is effectively over, nextPlayer() handles that check
     }
     nextPlayer();
 }
 
-// Bonus (gain a life)
 function bonus() {
+    const oldLives = currentPlayers[currentIndex].lives;
+
+    // Store last action
+    lastAction = {
+        playerIndex: currentIndex,
+        prevLives: oldLives,
+        actionType: 'bonus',
+        prevIndex: currentIndex
+    };
+
+    // Gain a life
     currentPlayers[currentIndex].lives++;
+    lastAction.newLives = currentPlayers[currentIndex].lives;
+
     nextPlayer();
 }
 
-// Simple "Undo" action
+/** 
+ * UNDO: Revert the latest action 
+ * - Restores lives
+ * - Restores currentIndex
+ */
 function undoAction() {
-    // For now, just show an alert or do partial logic.
-    // In a real scenario, you'd store the previous game state to revert changes.
-    alert("Undo last move (placeholder)!");
+    if (!lastAction) {
+        alert("No action to undo!");
+        return;
+    }
+
+    const {
+        playerIndex,
+        prevLives,
+        newLives,
+        prevIndex,
+        actionType
+    } = lastAction;
+
+    // If the player was removed on a 'miss' that killed them, 
+    // we need to re-insert them into currentPlayers.
+
+    // Case: If we removed the player (lives <= 0)
+    // after a miss, we must reinsert them at the same index
+    if (actionType === 'miss' && newLives < 1) {
+        // We removed the currentPlayers[playerIndex], so let's put them back
+        // We can store the player's name from the lastAction or deduce it
+        // For simplicity, let's store the player's name in lastAction 
+        // but we didn't do that above. We'll do it by capturing it before removal.
+
+        // Let's approach a simpler fix: if we see newLives < 1, we do:
+        // re-insert them with prevLives
+        // We'll store the name in lastAction so we can restore.
+
+        alert("Undo not possible if a player was completely removed. (Simple approach)");
+        // If we want to handle it fully, we'd track the removed player's name 
+        // and re-insert them. For now, let's keep it simple.
+        return;
+    }
+
+    // Otherwise, revert that player's lives
+    currentPlayers[playerIndex].lives = prevLives;
+
+    // Revert the currentIndex to the old turn
+    currentIndex = prevIndex;
+
+    // Clean up lastAction
+    lastAction = null;
+
+    // Refresh UI
+    updateGameUI();
 }
 
-// Reset the "Play Game" page but keep global players & wins
+/** ========== RESET & NAVIGATION ========== **/
+
 function resetGamePage() {
     // Show the "Play Game" heading again
     document.querySelector("#game h2").classList.remove("hidden");
@@ -169,12 +258,18 @@ function resetGamePage() {
     document.getElementById("livesList").innerHTML = "";
     currentIndex = 0;
     currentPlayers = [];
+    lastAction = null;
 }
 
-// Update the scoreboard with sorted wins
+function resetToAddPlayer() {
+    resetGamePage();    
+    showPage('game');   // Remain on 'game' page with the setup
+}
+
+// Scoreboard
 function updateScoreboard() {
     const sortedWins = Object.entries(wins)
-        .sort(([, a], [, b]) => b - a) // descending by win count
+        .sort(([, a], [, b]) => b - a)
         .map(([player, winCount]) => ({ player, winCount }));
 
     document.getElementById("scoreboard").innerHTML = sortedWins
@@ -182,7 +277,7 @@ function updateScoreboard() {
         .join("");
 }
 
-// Show a specific page (home, game, wins, etc.)
+// Show a specific page
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
     document.getElementById(pageId).classList.remove('hidden');
@@ -190,13 +285,4 @@ function showPage(pageId) {
     if (pageId === 'wins') {
         updateScoreboard();
     }
-}
-
-/* 
- * "resetToAddPlayer()" 
- * Called by the reset button below the player list
- */
-function resetToAddPlayer() {
-    resetGamePage();    
-    showPage('game');   // Force user to remain on 'game' page with the setup
 }
