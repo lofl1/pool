@@ -16,38 +16,27 @@ document.querySelectorAll('#menu button').forEach(button => {
 });
 
 // Global Variables
-let players = []; // Main player list, persists across games
-let currentPlayers = []; // Active players in the current game
+let players = [];
+let currentPlayers = [];
 let currentIndex = 0;
-let wins = {}; // Persistent wins tracking
+let wins = {};
 
 // Add a new player
 function addPlayer() {
     const playerName = document.getElementById("playerName").value.trim();
     if (playerName && !players.some(player => player.name === playerName)) {
         players.push({ name: playerName });
-        wins[playerName] = wins[playerName] || 0; // Initialize wins if not already
+        wins[playerName] = wins[playerName] || 0; // Initialize wins
         updatePlayerList();
         document.getElementById("playerName").value = "";
     }
 }
 
-// Remove a player
-function removePlayer(index) {
-    players.splice(index, 1);
-    updatePlayerList();
-}
-
-// Update the player list (with delete buttons)
+// Update the player list
 function updatePlayerList() {
     const playerList = document.getElementById("playerList");
     playerList.innerHTML = players
-        .map(
-            (player, index) =>
-                `<li>${player.name} 
-                <button onclick="removePlayer(${index})">❌ Delete</button>
-                </li>`
-        )
+        .map((player, index) => `<li>${player.name}</li>`)
         .join("");
 }
 
@@ -58,54 +47,33 @@ function startGame() {
         return;
     }
 
-    // Create a new copy of players with 3 lives for the current game
+    // Initialize game state
     currentPlayers = players.map(player => ({ name: player.name, lives: 3 }));
-    currentIndex = 0; // Start with the first player
+    currentIndex = 0;
+
+    // Hide setup, show game area
     document.getElementById("setup").classList.add("hidden");
-    document.getElementById("game-area").classList.remove("hidden");
+    const gameArea = document.getElementById("game-area");
+    gameArea.classList.remove("hidden");
+
+    // Scroll to game area
+    gameArea.scrollIntoView({ behavior: "smooth" });
+
     updateGameUI();
 }
 
-// Update the game UI (current player and player lives as hearts)
+// Update the game UI
 function updateGameUI() {
-    if (currentPlayers.length === 0) {
-        resetGamePage();
-        return;
-    }
     const currentPlayer = currentPlayers[currentIndex];
     document.getElementById("currentPlayer").textContent = currentPlayer.name;
 
-    // Update the list and highlight the current player
-    document.getElementById("livesList").innerHTML = currentPlayers
-        .map((player, index) => {
-            const highlightClass = index === currentIndex ? "highlight" : "";
-            return `<li class="${highlightClass}">${player.name}: ${"❤️".repeat(player.lives)}</li>`;
-        })
+    const livesList = document.getElementById("livesList");
+    livesList.innerHTML = currentPlayers
+        .map(player => `<li>${player.name}: ${"❤️".repeat(player.lives)}</li>`)
         .join("");
 }
 
-// Shuffle the player order
-function shuffleOrder() {
-    currentPlayers.sort(() => Math.random() - 0.5);
-    updateGameUI();
-    alert("Player order has been shuffled!");
-}
-
-// Move to the next player
-function nextPlayer() {
-    currentIndex = (currentIndex + 1) % currentPlayers.length;
-    if (currentPlayers.length === 1) {
-        const winner = currentPlayers[0].name;
-        wins[winner]++; // Increment wins
-        alert(`${winner} wins! 🎉`);
-        resetGamePage();
-        showPage("wins");
-    } else {
-        updateGameUI();
-    }
-}
-
-// Actions: pot, miss, bonus
+// Gameplay Actions
 function pot() {
     nextPlayer();
 }
@@ -113,41 +81,28 @@ function pot() {
 function miss() {
     currentPlayers[currentIndex].lives--;
     if (currentPlayers[currentIndex].lives <= 0) {
-        alert(`${currentPlayers[currentIndex].name} is out! ❌`);
+        alert(`${currentPlayers[currentIndex].name} is out!`);
         currentPlayers.splice(currentIndex, 1);
-        if (currentIndex >= currentPlayers.length) currentIndex = 0;
     }
     nextPlayer();
 }
 
 function bonus() {
-    currentPlayers[currentIndex].lives++; // Add a life to the current player
-    nextPlayer(); // Move to the next player
+    currentPlayers[currentIndex].lives++;
+    nextPlayer();
 }
 
-// Reset the "Play Game" page (but keep player names and wins)
-function resetGamePage() {
-    document.getElementById("setup").classList.remove("hidden");
-    document.getElementById("game-area").classList.add("hidden");
-    document.getElementById("livesList").innerHTML = "";
-    currentIndex = 0;
-    currentPlayers = []; // Clear the current game state
+function shuffleOrder() {
+    currentPlayers.sort(() => Math.random() - 0.5);
+    alert("Player order shuffled!");
+    updateGameUI();
 }
 
-// Navigation: Show specific page
-function showPage(pageId) {
-    document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
-    document.getElementById(pageId).classList.remove("hidden");
-    if (pageId === "wins") updateScoreboard();
-}
-
-// Update the scoreboard with win counts sorted by most wins
-function updateScoreboard() {
-    const sortedWins = Object.entries(wins)
-        .sort(([, a], [, b]) => b - a) // Sort by win count (descending)
-        .map(([player, winCount]) => ({ player, winCount }));
-
-    document.getElementById("scoreboard").innerHTML = sortedWins
-        .map(({ player, winCount }) => `<li>${player}: ${winCount} 🏆</li>`)
-        .join("");
+function nextPlayer() {
+    if (currentPlayers.length === 1) {
+        alert(`${currentPlayers[0].name} wins!`);
+        return;
+    }
+    currentIndex = (currentIndex + 1) % currentPlayers.length;
+    updateGameUI();
 }
