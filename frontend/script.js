@@ -62,11 +62,17 @@ function startGame() {
     // Create a new copy of players with 3 lives for the current game
     currentPlayers = players.map(player => ({ name: player.name, lives: 3 }));
     currentIndex = 0; // Start with the first player
+    
+    // Hide the add-players setup
     document.getElementById("setup").classList.add("hidden");
+    // Show the current player banner at the top
+    document.getElementById("currentPlayerBanner").classList.remove("hidden");
+    // Reveal the main game area
     document.getElementById("game-area").classList.remove("hidden");
+    
     updateGameUI();
 
-    // Scroll to the game area to ensure it's visible
+    // Scroll to the game area
     document.getElementById("game-area").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -76,6 +82,8 @@ function updateGameUI() {
         resetGamePage();
         return;
     }
+
+    // Set the current player's name in the banner
     const currentPlayer = currentPlayers[currentIndex];
     document.getElementById("currentPlayer").textContent = currentPlayer.name;
 
@@ -109,6 +117,7 @@ function shuffleOrder() {
 // Move to the next player
 function nextPlayer() {
     currentIndex = (currentIndex + 1) % currentPlayers.length;
+
     if (currentPlayers.length === 1) {
         const winner = currentPlayers[0].name;
         wins[winner]++; // Increment wins
@@ -137,14 +146,15 @@ function miss() {
 }
 
 function bonus() {
-    currentPlayers[currentIndex].lives++; // Add a life to the current player
-    nextPlayer(); // Move to the next player
+    currentPlayers[currentIndex].lives++; // Add a life
+    nextPlayer();
 }
 
 // Reset the "Play Game" page (but keep player names and wins)
 function resetGamePage() {
     document.getElementById("setup").classList.remove("hidden");
     document.getElementById("game-area").classList.add("hidden");
+    document.getElementById("currentPlayerBanner").classList.add("hidden");
     document.getElementById("livesList").innerHTML = "";
     currentIndex = 0;
     currentPlayers = []; // Clear the current game state
@@ -154,5 +164,8 @@ function resetGamePage() {
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
     document.getElementById(pageId).classList.remove('hidden');
-    if (pageId === 'wins') updateScoreboard();
+
+    if (pageId === 'wins') {
+        updateScoreboard();
+    }
 }
