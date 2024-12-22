@@ -11,9 +11,9 @@
     <nav>
         <div class="burger-menu" onclick="toggleMenu()">☰</div>
         <div id="menu" class="menu hidden">
-            <button onclick="showPage('home')">🏠 Home</button>
-            <button onclick="showPage('game')">🎮 Play Game</button>
-            <button onclick="showPage('wins')">🏆 Win Counter</button>
+            <button onclick="showPage('home'); closeMenu()">🏠 Home</button>
+            <button onclick="showPage('game'); closeMenu()">🎮 Play Game</button>
+            <button onclick="showPage('wins'); closeMenu()">🏆 Win Counter</button>
         </div>
     </nav>
 
@@ -52,7 +52,7 @@
             <h3>📊 Total Wins</h3>
             <ul id="scoreboard"></ul>
         </div>
-        <button onclick="showPage('game')">🔄 Play Another Game</button>
+        <button onclick="showPage('game'); closeMenu()">🔄 Play Another Game</button>
     </div>
 
     <script src="script.js"></script>
