@@ -3,13 +3,25 @@
 <head>
   <meta charset="UTF-8" />
 
-  <!-- Existing meta to prevent double-tap zoom + standalone mode on iOS -->
+  <!-- Viewport + iOS standalone mode -->
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no"
   />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- CHANGED: set the "app title" for iOS and your new favicon + touch icon -->
+  <meta name="apple-mobile-web-app-title" content="Killer Pool" />
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/sPFhN63/BARBERS-9.png"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://i.ibb.co/sPFhN63/BARBERS-9.png"
+  />
 
   <title>Killer Pool 🎱</title>
 
@@ -73,9 +85,8 @@
       <!-- RESET BUTTON below the player list -->
       <button id="resetBtn" onclick="resetToAddPlayer()">🔄 Reset</button>
 
-      <!-- Docked game controls (POT, MISS, BONUS, UNDO) -->
+      <!-- Docked game controls with emojis always shown -->
       <div class="game-controls">
-        <!-- Restored the emojis for all four buttons -->
         <button id="potBtn" onclick="pot()">✅ POT</button>
         <button id="missBtn" onclick="miss()">❌ MISS</button>
         <button id="bonusBtn" onclick="bonus()">🎁 BONUS</button>
