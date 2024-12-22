@@ -1,3 +1,6 @@
+/*
+  1) Define your color palette as CSS variables
+*/
 :root {
   --bright-pink-crayola: #ef476f; 
   --sunglow: #ffd166;            
@@ -12,32 +15,37 @@
 
 body {
   font-family: 'Rubik', sans-serif;
-  font-weight: 500;
+  font-weight: 500; /* Medium for normal text */
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0;
   padding: 0;
   text-align: center;
   background-color: #f5f5f5;
   color: #333;
-  /* Minimizing scroll issues on mobile */
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* allows scrolling if needed */
 }
 
 .hidden {
   display: none !important;
 }
 
-/* Fix the nav at top */
+/* 
+  NAV + BURGER + TITLE
+*/
 nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   background-color: #333;
   color: #fff;
-  padding: 6px 10px; /* smaller padding for mobile */
+  padding: 10px;
   text-align: left;
-  z-index: 999;
-  height: 45px; /* slightly reduced for small screens */
+  z-index: 999; 
+  height: 50px;
 }
 
 .burger-menu {
@@ -45,9 +53,9 @@ nav {
   cursor: pointer;
   display: inline-block;
   color: #fff;
+  margin-top: 3px;
 }
 
-/* Centered Title in Nav */
 .nav-title {
   position: absolute;
   left: 50%;
@@ -57,14 +65,14 @@ nav {
   font-family: 'Rubik Mono One', sans-serif;
   font-weight: 400;
   color: #fff;
-  font-size: 1.2rem; /* scaled down for mobile */
+  font-size: clamp(1rem, 5vw, 2rem);
   white-space: nowrap; 
 }
 
-/* Dropdown menu */
 .menu {
   position: absolute;
-  top: 45px; left: 10px;
+  top: 50px;
+  left: 10px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -72,7 +80,7 @@ nav {
   flex-direction: column;
   text-align: left;
   padding: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .menu.hidden {
   display: none;
@@ -80,124 +88,139 @@ nav {
 .menu button {
   background: none;
   border: none;
-  font-size: 14px; /* smaller for mobile */
+  font-size: 16px;
   margin: 5px 0;
   cursor: pointer;
   text-align: left;
   color: #333;
-  padding: 5px 8px;
-  border-radius: 18px;
+  padding: 8px 12px;
+  border-radius: 25px; 
 }
 .menu button:hover {
   background-color: #f0f0f0;
 }
 
-/* Pages (no big margin-top to avoid scroll issues) */
+/* 
+  PAGE LAYOUT
+*/
 .page {
   display: none;
-  padding: 0px 10px; /* minimal horizontal padding */
-  margin-top: 45px;  /* space for nav */
+  padding: 20px;
+  margin-top: 60px; /* keep content below the nav */
 }
 .page:not(.hidden) {
   display: block;
 }
 
-/* Home Page */
+/* 
+  HOME PAGE
+*/
 h1 {
   font-family: 'Rubik Mono One', sans-serif;
   font-weight: 400; 
-  font-size: 2rem;
-  margin: 20px 0 10px;
+  font-size: 3rem;
+  margin: 40px 0 20px;
   color: #333;
   text-align: center;
 }
 
 h2, h3 {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Rubik', sans-serif; /* Bold heading */
   font-weight: 700;
   color: #444;
-  margin: 15px 0;
+  margin: 20px 0;
   text-align: center;
 }
 
-.subtext {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+.subtext, p {
+  font-weight: 500;
+  font-size: 1rem;
   color: #666;
+  margin-bottom: 1.5rem;
 }
 
 #homeStartGameBtn {
   background-color: #000;
   color: #fff;
-  font-size: 1rem;
-  padding: 10px 20px;
+  font-size: 1.2rem;
+  padding: 15px 30px;
   border: none;
-  border-radius: 20px; 
+  border-radius: 25px; 
   cursor: pointer;
 }
 #homeStartGameBtn:hover {
   background-color: #333;
 }
 
-/* Current Player Banner */
+/* 
+  CURRENT PLAYER BANNER (fixed under nav)
+*/
 #currentPlayerBanner {
   position: fixed;
-  top: 45px; 
-  left: 0; right: 0;
+  top: 50px; 
+  left: 0;
+  right: 0;
   background-color: #f5f5f5;
   border-bottom: 1px solid #ddd;
   z-index: 500;
-  padding: 5px 0;
+  padding: 10px 0;
 }
 #currentPlayerBanner.hidden {
   display: none !important;
 }
-#currentPlayerBanner h3 {
-  margin: 0;
-  font-size: 1rem;
-}
 #currentPlayer {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 700; 
   color: var(--bright-pink-crayola);
   margin-left: 5px;
 }
 
-/* Setup Section */
+/* 
+  SETUP SECTION
+*/
 #setup {
-  margin: 10px 0;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 #setup input[type="text"] {
-  padding: 6px;
-  font-size: 14px;
+  padding: 10px;
+  font-size: 16px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 18px;
+  border-radius: 25px; 
   width: 80%;
   max-width: 300px;
 }
+
+/* Buttons in the setup section */
 #setup button {
-  margin: 6px 3px;
-  padding: 8px 15px;
-  border-radius: 20px;
+  margin: 10px 5px;
+  padding: 10px 20px;
+  border-radius: 25px;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease-in-out;
 }
+
 #addPlayerBtn {
-  background-color: var(--sunglow);
+  background-color: var(--sunglow); 
 }
 #addPlayerBtn:hover {
   background-color: #ffcc57;
 }
+
 #shuffleBtn {
   background-color: var(--blue-ncs);
 }
 #shuffleBtn:hover {
   background-color: #0f7b9f;
 }
+
 #startGameBtn {
   background-color: var(--emerald);
 }
@@ -205,38 +228,44 @@ h2, h3 {
   background-color: #05c094;
 }
 
-/* Player List */
+/* 
+  PLAYER LIST (Add Player Section)
+*/
 .player-list {
   list-style: none;
   padding: 0;
-  margin: 10px auto;
+  margin: 20px auto;
   width: 100%;
   max-width: 300px;
   text-align: left;
-  font-size: 0.9rem; /* slightly smaller for mobile */
 }
 .player-list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px;
+  padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 20px; 
-  margin-bottom: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 25px; 
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .player-list button {
   background-color: var(--bright-pink-crayola);
   border: none;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 18px;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 25px;
   color: #fff;
   cursor: pointer;
 }
+.player-list button:hover {
+  background-color: #e33e65;
+}
 
-/* Game Area */
+/* 
+  GAME AREA
+*/
 #game-area {
   display: none; 
 }
@@ -244,82 +273,89 @@ h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* remove large padding to avoid scrolling issues */
-  margin-bottom: 50px; 
+  padding-top: 90px;   
+  margin-bottom: 60px; 
 }
 
-/* Lives List */
 #livesList {
-  margin: 10px 0;
+  margin: 20px 0;
   width: 100%;
   max-width: 300px;
 }
 #livesList li {
-  font-size: 14px;
-  margin: 4px 0;
+  font-size: 18px;
+  margin: 5px 0;
   text-align: left;
-  border-radius: 15px; 
+  border-radius: 25px; 
 }
+
 .highlight {
   background-color: #ffeb3b;
   font-weight: bold;
-  border-radius: 15px; 
-  padding: 4px;
+  border-radius: 25px; 
+  padding: 5px;
   color: #333;
 }
 
-/* Reset Button */
+/* RESET BUTTON (below the lives list) */
 #resetBtn {
-  margin: 6px 3px;
-  padding: 8px 15px;
-  border-radius: 20px;
+  margin: 10px 5px;
+  padding: 10px 20px;
+  border-radius: 25px;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   border: none;
   cursor: pointer;
   background-color: var(--blue-ncs); 
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease-in-out;
 }
 #resetBtn:hover {
   background-color: #0f7b9f;
 }
 
-/* Bottom Controls: Only Emojis */
+/* 
+  FIXED BUTTONS DOCK (POT, MISS, BONUS, UNDO)
+*/
 .game-controls {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: #444;
-  padding: 5px;
+  padding: 10px;
   display: flex;
   justify-content: space-around;
-  gap: 5px;
+  gap: 10px;
   z-index: 100;
-  box-shadow: 0 -2px 3px rgba(0,0,0,0.1);
-  height: 50px; 
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  height: 60px;
 }
+
 .game-controls button {
   flex-grow: 1;
-  padding: 5px;
-  font-size: 18px; /* big emoji */
+  padding: 10px;
+  font-size: 16px;
   border-radius: 25px;
   color: #fff;
   border: none;
   cursor: pointer;
 }
 
-/* Each control = a color from the palette */
+/* POT / MISS / BONUS / UNDO colors */
 #potBtn {
   background-color: var(--emerald);
 }
 #potBtn:hover {
   background-color: #05c094;
 }
+
 #missBtn {
   background-color: var(--bright-pink-crayola);
 }
 #missBtn:hover {
   background-color: #e33e65;
 }
+
 #bonusBtn {
   background-color: var(--sunglow);
   color: #333;
@@ -327,6 +363,7 @@ h2, h3 {
 #bonusBtn:hover {
   background-color: #ffcc57;
 }
+
 #undoBtn {
   background-color: #000; 
 }
@@ -334,18 +371,22 @@ h2, h3 {
   background-color: #333;
 }
 
-/* Win Counter Page */
+/* 
+  WIN COUNTER PAGE
+*/
 .scoreboard {
-  margin-top: 10px;
-  padding: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
   background-color: #fff;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .scoreboard h3 {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  font-family: 'Rubik', sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 24px;
   color: #333;
 }
 .scoreboard ul {
@@ -355,27 +396,27 @@ h2, h3 {
   max-width: 300px;
 }
 .scoreboard li {
-  padding: 6px;
-  margin-bottom: 6px;
-  font-size: 14px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
   background-color: #f9f9f9;
-  border-radius: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* "Play Another Game" Button */
+/* PLAY ANOTHER GAME BUTTON */
 #playAnotherBtn {
-  margin-top: 10px;
-  padding: 8px 15px;
-  border-radius: 20px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 25px;
   background-color: var(--emerald);
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   border: none;
+  transition: background-color 0.2s ease-in-out;
   width: calc(100% - 40px);
   max-width: 300px;
-  cursor: pointer;
-  transition: background-color 0.2s;
 }
 #playAnotherBtn:hover {
   background-color: #05c094;
