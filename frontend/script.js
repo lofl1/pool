@@ -1,4 +1,4 @@
-const backendURL = 'https://YOUR_RENDER_BACKEND_URL/api/data'; // Replace with your Render backend URL
+const backendURL = 'https://pool-69rx.onrender.com'; // Replace with your Render backend URL
 
 let wins = {};
 let history = {};
