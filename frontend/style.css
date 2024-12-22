@@ -1,48 +1,36 @@
 /* General Styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent scrolling */
+    overflow: hidden;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 .page {
     display: none;
-    height: 100vh; /* Full-screen sections */
+    height: 100vh; /* Full-screen view */
     width: 100vw;
-    overflow-y: auto; /* Allow scrolling within the section */
+    overflow: auto; /* Allow scrolling within the section */
 }
 
 .page:not(.hidden) {
     display: block;
 }
 
-.fullscreen {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Navigation */
 nav {
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #444;
-    color: #fff;
+    color: white;
     padding: 10px;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .burger-menu {
     font-size: 24px;
     cursor: pointer;
-    color: white;
 }
 
 .menu {
@@ -51,7 +39,7 @@ nav {
     left: 10px;
     background-color: white;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -64,30 +52,19 @@ nav {
 .menu button {
     background: none;
     border: none;
-    font-size: 18px;
-    margin: 5px 0;
+    padding: 10px;
+    font-size: 16px;
     cursor: pointer;
     text-align: left;
-}
-
-/* Game Area Styling */
-#game-area {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
 }
 
 .game-controls {
     display: flex;
     justify-content: space-around;
-    width: 100%;
+    margin-top: 20px;
 }
 
 .game-controls button {
-    flex: 1;
-    margin: 5px;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
@@ -101,7 +78,6 @@ nav {
     background-color: #45a049;
 }
 
-/* Smooth Transitions */
-.smooth-scroll {
-    scroll-behavior: smooth;
+.hidden {
+    display: none;
 }
