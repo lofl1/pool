@@ -51,12 +51,12 @@ function startGame() {
     currentPlayers = players.map(player => ({ name: player.name, lives: 3 }));
     currentIndex = 0;
 
-    // Hide setup, show game area
+    // Hide setup and show game area
     document.getElementById("setup").classList.add("hidden");
     const gameArea = document.getElementById("game-area");
     gameArea.classList.remove("hidden");
 
-    // Scroll to game area
+    // Scroll smoothly to the game area
     gameArea.scrollIntoView({ behavior: "smooth" });
 
     updateGameUI();
@@ -83,6 +83,7 @@ function miss() {
     if (currentPlayers[currentIndex].lives <= 0) {
         alert(`${currentPlayers[currentIndex].name} is out!`);
         currentPlayers.splice(currentIndex, 1);
+        if (currentIndex >= currentPlayers.length) currentIndex = 0;
     }
     nextPlayer();
 }
@@ -94,15 +95,24 @@ function bonus() {
 
 function shuffleOrder() {
     currentPlayers.sort(() => Math.random() - 0.5);
-    alert("Player order shuffled!");
     updateGameUI();
+    alert("Player order shuffled!");
 }
 
 function nextPlayer() {
     if (currentPlayers.length === 1) {
         alert(`${currentPlayers[0].name} wins!`);
+        resetGamePage();
         return;
     }
     currentIndex = (currentIndex + 1) % currentPlayers.length;
     updateGameUI();
+}
+
+// Reset the game page
+function resetGamePage() {
+    document.getElementById("setup").classList.remove("hidden");
+    document.getElementById("game-area").classList.add("hidden");
+    currentPlayers = [];
+    currentIndex = 0;
 }
