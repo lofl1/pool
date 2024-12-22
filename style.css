@@ -1,0 +1,258 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height for mobile screens */
+    overflow: hidden; /* Prevent scrolling during gameplay */
+}
+h1, h2, h3 {
+    margin: 20px 0;
+    color: #444;
+}
+
+/* Navigation */
+nav {
+    position: relative;
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+.burger-menu {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+    color: #fff;
+}
+.menu {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.menu.hidden {
+    display: none;
+}
+.menu button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    margin: 5px 0;
+    cursor: pointer;
+    text-align: left;
+    color: #333;
+}
+.menu button:hover {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+/* Page Layout */
+.page {
+    display: none;
+    padding: 20px;
+}
+.page:not(.hidden) {
+    display: block;
+}
+
+/* Play Game Section */
+#setup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#setup input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 300px;
+}
+
+#setup button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    border: none;
+}
+#setup button:hover {
+    background-color: #45a049;
+}
+
+/* Styling the player list */
+.player-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+}
+.player-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.player-list button {
+    background-color: #e91e63;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+.player-list button:hover {
+    background-color: #d81b60;
+}
+
+/* Play Game Area */
+#game-area {
+    flex: 1; /* Take up all available space except for the docked buttons */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto; /* Allow scrolling if needed */
+    margin-bottom: 60px; /* Ensure enough space above the docked buttons */
+}
+#livesList {
+    margin: 20px 0;
+    width: 100%;
+}
+#livesList, .player-list {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* Highlight the current player in the list */
+.highlight {
+    background-color: #ffeb3b; /* Yellow background for highlighting */
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px;
+    color: #333; /* Dark text for readability */
+}
+
+/* Lives List Styling */
+#livesList li {
+    font-size: 18px;
+    margin: 5px 0;
+    text-align: left; /* Align names and hearts */
+}
+
+/* Buttons Docked at Bottom */
+.game-controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #444;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    z-index: 100;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+    height: 60px; /* Ensure buttons don't interfere with content above */
+}
+.game-controls button {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.game-controls button:hover {
+    background-color: #45a049;
+}
+
+/* Full-Screen Scoreboard Styling for Mobile */
+.scoreboard {
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scoreboard h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.scoreboard ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 300px;
+    margin: 0 auto;
+}
+.scoreboard li {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Current Player Styling */
+#currentPlayer {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e91e63;
+    margin-bottom: 10px;
+}
+
+/* "Play Another Game" Button Styling */
+#wins button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    margin-top: 20px;
+    width: calc(100% - 40px);
+    max-width: 300px;
+}
+#wins button:hover {
+    background-color: #45a049;
+}
