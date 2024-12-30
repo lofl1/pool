@@ -2,11 +2,11 @@
   1) Define your color palette as CSS variables
 */
 :root {
-  --bright-pink-crayola: #ef476f; 
-  --sunglow: #ffd166;            
-  --emerald: #06d6a0;            
-  --blue-ncs: #118ab2;           
-  --midnight-green: #073b4c;     
+  --bright-pink-crayola: #ef476f;
+  --sunglow: #ffd166;
+  --emerald: #06d6a0;
+  --blue-ncs: #118ab2;
+  --midnight-green: #073b4c;
 }
 
 * {
@@ -15,7 +15,7 @@
 
 body {
   font-family: 'Rubik', sans-serif;
-  font-weight: 500; 
+  font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   margin: 0;
@@ -25,7 +25,7 @@ body {
   color: #333;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 /* Only add extra bottom padding if .standalone on iOS */
@@ -47,7 +47,7 @@ html, body {
   display: none !important;
 }
 
-/* 
+/*
   NAV + BURGER + TITLE
 */
 nav {
@@ -59,7 +59,7 @@ nav {
   color: #fff;
   padding: 10px;
   text-align: left;
-  z-index: 999; 
+  z-index: 999;
   height: 50px;
 }
 
@@ -81,7 +81,7 @@ nav {
   font-weight: 400;
   color: #fff;
   font-size: clamp(1rem, 5vw, 2rem);
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .menu {
@@ -109,13 +109,13 @@ nav {
   text-align: left;
   color: #333;
   padding: 8px 12px;
-  border-radius: 25px; 
+  border-radius: 25px;
 }
 .menu button:hover {
   background-color: #f0f0f0;
 }
 
-/* 
+/*
   PAGE LAYOUT
 */
 .page {
@@ -127,12 +127,12 @@ nav {
   display: block;
 }
 
-/* 
+/*
   HOME PAGE
 */
 h1 {
   font-family: 'Rubik Mono One', sans-serif;
-  font-weight: 400; 
+  font-weight: 400;
   font-size: 3rem;
   margin: 40px 0 20px;
   color: #333;
@@ -140,7 +140,7 @@ h1 {
 }
 
 h2, h3 {
-  font-family: 'Rubik', sans-serif; 
+  font-family: 'Rubik', sans-serif;
   font-weight: 700;
   color: #444;
   margin: 20px 0;
@@ -160,19 +160,19 @@ h2, h3 {
   font-size: 1.2rem;
   padding: 15px 30px;
   border: none;
-  border-radius: 25px; 
+  border-radius: 25px;
   cursor: pointer;
 }
 #homeStartGameBtn:hover {
   background-color: #333;
 }
 
-/* 
+/*
   CURRENT PLAYER BANNER (fixed under nav)
 */
 #currentPlayerBanner {
   position: fixed;
-  top: 50px; 
+  top: 50px;
   left: 0;
   right: 0;
   background-color: #f5f5f5;
@@ -185,12 +185,12 @@ h2, h3 {
 }
 #currentPlayer {
   font-size: 24px;
-  font-weight: 700; 
+  font-weight: 700;
   color: var(--bright-pink-crayola);
   margin-left: 5px;
 }
 
-/* 
+/*
   SETUP SECTION
 */
 #setup {
@@ -205,7 +205,7 @@ h2, h3 {
   font-size: 16px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 25px; 
+  border-radius: 25px;
   width: 80%;
   max-width: 300px;
 }
@@ -222,7 +222,7 @@ h2, h3 {
 }
 
 #addPlayerBtn {
-  background-color: var(--sunglow); 
+  background-color: var(--sunglow);
 }
 #addPlayerBtn:hover {
   background-color: #ffcc57;
@@ -242,7 +242,7 @@ h2, h3 {
   background-color: #05c094;
 }
 
-/* 
+/*
   PLAYER LIST
 */
 .player-list {
@@ -260,7 +260,7 @@ h2, h3 {
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 25px; 
+  border-radius: 25px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -277,18 +277,18 @@ h2, h3 {
   background-color: #e33e65;
 }
 
-/* 
+/*
   GAME AREA
 */
 #game-area {
-  display: none; 
+  display: none;
 }
 #game-area:not(.hidden) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 90px;   
-  margin-bottom: 60px; 
+  padding-top: 90px;
+  margin-bottom: 60px;
 }
 
 #livesList {
@@ -300,11 +300,11 @@ h2, h3 {
   font-size: 18px;
   margin: 5px 0;
   text-align: left;
-  border-radius: 25px; 
+  border-radius: 25px;
 }
 
 .highlight {
-  background-color: #ccf7d8 !important; 
+  background-color: #ccf7d8 !important;
   border-radius: 25px;
   padding: 5px;
   font-weight: 500; /* or 700 if you still want bolder text */
@@ -320,14 +320,14 @@ h2, h3 {
   font-size: 16px;
   border: none;
   cursor: pointer;
-  background-color: var(--blue-ncs); 
+  background-color: var(--blue-ncs);
   transition: background-color 0.2s ease-in-out;
 }
 #resetBtn:hover {
   background-color: #0f7b9f;
 }
 
-/* 
+/*
   FIXED BUTTONS DOCK
 */
 /* CHANGED: removed fixed 60px height; added align-items:center. */
@@ -339,7 +339,7 @@ h2, h3 {
   background-color: #444;
   padding: 10px;
   display: flex;
-  align-items: center;  /* vertically center the buttons */
+  align-items: center;
   justify-content: space-around;
   gap: 10px;
   z-index: 100;
@@ -379,14 +379,22 @@ h2, h3 {
   background-color: #ffcc57;
 }
 
-#undoBtn {
-  background-color: #000; 
+#killBtn {
+    background-color: var(--midnight-green);
 }
-#undoBtn:hover {
-  background-color: #333;
+#killBtn:hover {
+    background-color: #062c3a;
 }
 
-/* 
+#undoBtn {
+    background-color: #000;
+}
+#undoBtn:hover {
+    background-color: #333;
+}
+
+
+/*
   WIN COUNTER PAGE
 */
 .scoreboard {
