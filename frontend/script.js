@@ -23,11 +23,11 @@ if (window.navigator.standalone === true) {
 }
 
 // Global Variables
-let players = [];            
-let currentPlayers = [];     
-let currentIndex = 0;        
-let wins = {};            
-let lastAction = null;    
+let players = [];
+let currentPlayers = [];
+let currentIndex = 0;
+let wins = {};
+let lastAction = null;
 
 /** ========== ADDING PLAYERS & SHUFFLING ========== **/
 
@@ -59,7 +59,8 @@ function updatePlayerList() {
             `<li>
                 ${player.name}
                 <button onclick="removePlayer(${i})">❌ Delete</button>
-            </li>`)
+            </li>`
+        )
         .join("");
 }
 
@@ -103,7 +104,7 @@ function updateGameUI() {
         const highlightClass = i === currentIndex ? 'highlight' : '';
         return `<li class="${highlightClass}">
             ${player.name}: ${"❤️".repeat(player.lives)}
-            </li>`;
+        </li>`;
     }).join("");
 }
 
@@ -128,7 +129,7 @@ function pot() {
         prevLives: currentPlayers[currentIndex].lives,
         actionType: 'pot',
         newLives: currentPlayers[currentIndex].lives,
-		prevCurrentPlayers: [...currentPlayers],
+        prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex
     };
     nextPlayer();
@@ -140,7 +141,7 @@ function miss() {
         playerIndex: currentIndex,
         prevLives: oldLives,
         actionType: 'miss',
-		prevCurrentPlayers: [...currentPlayers],
+        prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex
     };
 
@@ -163,7 +164,7 @@ function bonus() {
         playerIndex: currentIndex,
         prevLives: oldLives,
         actionType: 'bonus',
-		prevCurrentPlayers: [...currentPlayers],
+        prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex
     };
 
@@ -175,28 +176,33 @@ function bonus() {
 
 function kill() {
     const oldLives = currentPlayers[currentIndex].lives;
-	lastAction = {
+    lastAction = {
         playerIndex: currentIndex,
         prevLives: oldLives,
         actionType: 'kill',
-		prevCurrentPlayers: [...currentPlayers],
+        prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex,
-		newLives: 0,
+        killedPlayer: currentPlayers[currentIndex], // Store killed player for undo
     };
-
+    
     currentPlayers[currentIndex].lives = 0;
-	
+
     if (currentPlayers[currentIndex].lives <= 0) {
         alert(`${currentPlayers[currentIndex].name} is out! 💀`);
-        currentPlayers.splice(currentIndex, 1);
-        if (currentIndex >= currentPlayers.length) {
-            currentIndex = 0;
-        }
+        const killedPlayer = currentPlayers.splice(currentIndex, 1)[0];
+        lastAction.newCurrentPlayers = [...currentPlayers]
+        lastAction.killedPlayerIndex = currentIndex;
+				// If currentIndex is equal to or more than array length, reset it
+				if (currentIndex >= currentPlayers.length) {
+						currentIndex = 0;
+				}
+
     }
+	
     nextPlayer();
 }
 
-/** 
+/**
  * UNDO: Revert the latest action
  */
 function undoAction() {
@@ -205,18 +211,23 @@ function undoAction() {
         return;
     }
 
-    const { playerIndex, prevLives, newLives, prevIndex, actionType, prevCurrentPlayers } = lastAction;
+    const { playerIndex, prevLives, newLives, prevIndex, actionType, prevCurrentPlayers, killedPlayer, killedPlayerIndex, newCurrentPlayers } = lastAction;
 
-	currentPlayers = [...prevCurrentPlayers];
+
+    currentPlayers = [...prevCurrentPlayers];
     currentIndex = prevIndex;
-	
-	if(actionType === 'kill') {
-        // If the action was a kill, we don't modify lives, just reinstate
-		// the old array and index
-		
+
+
+     if(actionType === 'kill' && killedPlayer) {
+      // If the action was a kill, reinstate player with previous lives
+      currentPlayers.splice(killedPlayerIndex, 0, killedPlayer);
+
+      currentPlayers[playerIndex].lives = prevLives;
+      lastAction.newCurrentPlayers = [...currentPlayers];
     } else {
-		currentPlayers[playerIndex].lives = prevLives;
-	}
+        currentPlayers[playerIndex].lives = prevLives;
+    }
+
 
     lastAction = null;
 
