@@ -79,22 +79,25 @@
         </div>
 
         <!-- Main game area (hidden until Start Game) -->
-        <div id="game-area" class="hidden">
-            <ul id="livesList" class="player-list"></ul>
-
-            <!-- RESET BUTTON below the player list -->
-            <button id="resetBtn" onclick="resetToAddPlayer()">🔄 Reset</button>
-
-            <!-- Docked game controls with emojis always shown -->
-            <div class="game-controls">
-                <button id="potBtn" onclick="pot()">✅ POT</button>
-                <button id="missBtn" onclick="miss()">❌ MISS</button>
-                <button id="bonusBtn" onclick="bonus()">🎁 BONUS</button>
-			         	<button id="killBtn" onclick="kill()">💀 KILL</button>
-                <button id="undoBtn" onclick="undoAction()">↩️ UNDO</button>
-            </div>
-        </div>
-    </div>
+<div id="game-area" class="hidden">
+	<ul id="livesList" class="player-list"></ul>
+	
+	<!-- RESET BUTTON below the player list -->
+	<button id="resetBtn" onclick="resetToAddPlayer()">🔄 Reset</button>
+	
+	<!-- Docked game controls with emojis always shown -->
+	<div class="game-controls">
+		<div class="pot-miss-bonus-container">
+			<button id="potBtn" class="large-button" onclick="pot()">✅ POT</button>
+			<button id="missBtn" class="large-button" onclick="miss()">❌ MISS</button>
+			<button id="bonusBtn" class="large-button" onclick="bonus()">🎁 BONUS</button>
+		</div>
+		<div class="kill-undo-container">
+			<button id="killBtn" onclick="kill()">💀 KILL</button>
+			<button id="undoBtn" onclick="undoAction()">↩️ UNDO</button>
+		</div>
+	</div>
+</div>
 
     <!-- Win Counter Page -->
     <div id="wins" class="page hidden">
