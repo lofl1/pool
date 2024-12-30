@@ -26,8 +26,8 @@ if (window.navigator.standalone === true) {
 let players = [];            
 let currentPlayers = [];     
 let currentIndex = 0;        
-let wins = {};               
-let lastAction = null;       
+let wins = {};            
+let lastAction = null;    
 
 /** ========== ADDING PLAYERS & SHUFFLING ========== **/
 
@@ -35,7 +35,7 @@ function addPlayer() {
     const playerName = document.getElementById("playerName").value.trim();
     if (playerName && !players.some(player => player.name === playerName)) {
         players.push({ name: playerName });
-        wins[playerName] = wins[playerName] || 0; 
+        wins[playerName] = wins[playerName] || 0;
         updatePlayerList();
         document.getElementById("playerName").value = "";
     }
@@ -57,9 +57,9 @@ function updatePlayerList() {
     playerList.innerHTML = players
         .map((player, i) =>
             `<li>
-               ${player.name}
-               <button onclick="removePlayer(${i})">❌ Delete</button>
-             </li>`)
+                ${player.name}
+                <button onclick="removePlayer(${i})">❌ Delete</button>
+            </li>`)
         .join("");
 }
 
@@ -102,8 +102,8 @@ function updateGameUI() {
     livesList.innerHTML = currentPlayers.map((player, i) => {
         const highlightClass = i === currentIndex ? 'highlight' : '';
         return `<li class="${highlightClass}">
-                  ${player.name}: ${"❤️".repeat(player.lives)}
-                </li>`;
+            ${player.name}: ${"❤️".repeat(player.lives)}
+            </li>`;
     }).join("");
 }
 
@@ -127,7 +127,8 @@ function pot() {
         playerIndex: currentIndex,
         prevLives: currentPlayers[currentIndex].lives,
         actionType: 'pot',
-        newLives: currentPlayers[currentIndex].lives, 
+        newLives: currentPlayers[currentIndex].lives,
+		prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex
     };
     nextPlayer();
@@ -139,6 +140,7 @@ function miss() {
         playerIndex: currentIndex,
         prevLives: oldLives,
         actionType: 'miss',
+		prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex
     };
 
@@ -161,6 +163,7 @@ function bonus() {
         playerIndex: currentIndex,
         prevLives: oldLives,
         actionType: 'bonus',
+		prevCurrentPlayers: [...currentPlayers],
         prevIndex: currentIndex
     };
 
@@ -170,8 +173,31 @@ function bonus() {
     nextPlayer();
 }
 
+function kill() {
+    const oldLives = currentPlayers[currentIndex].lives;
+	lastAction = {
+        playerIndex: currentIndex,
+        prevLives: oldLives,
+        actionType: 'kill',
+		prevCurrentPlayers: [...currentPlayers],
+        prevIndex: currentIndex,
+		newLives: 0,
+    };
+
+    currentPlayers[currentIndex].lives = 0;
+	
+    if (currentPlayers[currentIndex].lives <= 0) {
+        alert(`${currentPlayers[currentIndex].name} is out! 💀`);
+        currentPlayers.splice(currentIndex, 1);
+        if (currentIndex >= currentPlayers.length) {
+            currentIndex = 0;
+        }
+    }
+    nextPlayer();
+}
+
 /** 
- * UNDO: Revert the latest action 
+ * UNDO: Revert the latest action
  */
 function undoAction() {
     if (!lastAction) {
@@ -179,15 +205,19 @@ function undoAction() {
         return;
     }
 
-    const { playerIndex, prevLives, newLives, prevIndex, actionType } = lastAction;
+    const { playerIndex, prevLives, newLives, prevIndex, actionType, prevCurrentPlayers } = lastAction;
 
-    if (actionType === 'miss' && newLives < 1) {
-        alert("Undo not possible if a player was removed. (Simple approach)");
-        return;
-    }
-
-    currentPlayers[playerIndex].lives = prevLives;
+	currentPlayers = [...prevCurrentPlayers];
     currentIndex = prevIndex;
+	
+	if(actionType === 'kill') {
+        // If the action was a kill, we don't modify lives, just reinstate
+		// the old array and index
+		
+    } else {
+		currentPlayers[playerIndex].lives = prevLives;
+	}
+
     lastAction = null;
 
     updateGameUI();
