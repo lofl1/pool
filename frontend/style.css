@@ -331,57 +331,29 @@ h2, h3 {
   FIXED BUTTONS DOCK
 */
 /* CHANGED: removed fixed 60px height; added align-items:center. */
-/* GAME CONTROLS CONTAINER */
 .game-controls {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #444;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-	align-items: center;
-	gap: 10px;
-    z-index: 100;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Pot, Miss, Bonus Container */
-.pot-miss-bonus-container {
-	display: flex;
-	justify-content: space-around;
-    gap: 10px;
-	width: 100%;
-}
-.pot-miss-bonus-container button {
-	flex-grow: 1; /* each button takes equal space */
-}
-/* KILL UNDO CONTAINER */
-.kill-undo-container {
-    display: flex;
-    justify-content: space-around;
-	gap: 10px;
-	width: 100%;
-}
-.kill-undo-container button {
-    flex-grow: 1; /* each button takes equal space */
-}
-
-/* Large Buttons */
-.large-button {
-    padding: 20px; /* Increased padding */
-    font-size: 18px; /* slightly larger font */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #444;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  z-index: 100;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .game-controls button {
-	flex-grow: 1;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 25px;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 25px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 /* POT / MISS / BONUS / UNDO colors */
