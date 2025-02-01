@@ -155,7 +155,7 @@ function miss() {
         alert(`${currentPlayers[currentIndex].name} is out! ❌`);
         currentPlayers.splice(currentIndex, 1);
 
-        // Adjust currentIndex correctly
+        // Adjust currentIndex **only** if the player was removed
         if (currentIndex >= currentPlayers.length) {
             currentIndex = 0;
         }
@@ -164,7 +164,7 @@ function miss() {
         currentIndex = (currentIndex + 1) % currentPlayers.length;
     }
 
-    nextPlayer();
+    updateGameUI();
 }
 
 function bonus() {
@@ -196,17 +196,12 @@ function kill() {
     alert(`${currentPlayers[currentIndex].name} is out! 💀`);
     currentPlayers.splice(currentIndex, 1);
 
-    // Adjust currentIndex correctly
-    if (currentPlayers.length === 0) {
-        resetGamePage();
-        return;
-    }
-
+    // Adjust currentIndex **only** if the player was removed
     if (currentIndex >= currentPlayers.length) {
         currentIndex = 0;
     }
 
-    nextPlayer();
+    updateGameUI();
 }
 
 /**
