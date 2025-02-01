@@ -108,13 +108,10 @@ function updateGameUI() {
 }
 
 function nextPlayer() {
-	if (currentPlayers.length === 0) {
+    if (currentPlayers.length === 0) {
         resetGamePage();
         return;
     }
-
-    currentIndex = (currentIndex + 1) % currentPlayers.length;
-    
 
     if (currentPlayers.length === 1) {
         const winner = currentPlayers[0].name;
@@ -124,6 +121,7 @@ function nextPlayer() {
         resetGamePage();
         showPage('wins');
     } else {
+        currentIndex = (currentIndex + 1) % currentPlayers.length;
         updateGameUI();
     }
 }
@@ -134,7 +132,7 @@ function pot() {
         prevLives: currentPlayers[currentIndex].lives,
         actionType: 'pot',
         newLives: currentPlayers[currentIndex].lives,
-		currentPlayers: JSON.parse(JSON.stringify(currentPlayers)),
+        currentPlayers: JSON.parse(JSON.stringify(currentPlayers)),
         prevIndex: currentIndex
     };
     nextPlayer();
@@ -146,7 +144,7 @@ function miss() {
         playerIndex: currentIndex,
         prevLives: oldLives,
         actionType: 'miss',
-		currentPlayers: JSON.parse(JSON.stringify(currentPlayers)),
+        currentPlayers: JSON.parse(JSON.stringify(currentPlayers)),
         prevIndex: currentIndex
     };
 
@@ -156,10 +154,16 @@ function miss() {
     if (currentPlayers[currentIndex].lives <= 0) {
         alert(`${currentPlayers[currentIndex].name} is out! ❌`);
         currentPlayers.splice(currentIndex, 1);
+
+        // Adjust currentIndex correctly
         if (currentIndex >= currentPlayers.length) {
             currentIndex = 0;
         }
+    } else {
+        // Move to the next player if no one was removed
+        currentIndex = (currentIndex + 1) % currentPlayers.length;
     }
+
     nextPlayer();
 }
 
@@ -180,34 +184,29 @@ function bonus() {
 }
 
 function kill() {
-	const oldLives = currentPlayers[currentIndex].lives;
-	lastAction = {
-    playerIndex: currentIndex,
-    prevLives: oldLives,
-    actionType: 'kill',
-		currentPlayers: JSON.parse(JSON.stringify(currentPlayers)),
-    prevIndex: currentIndex,
-		newLives: 0,
-  };
+    lastAction = {
+        playerIndex: currentIndex,
+        prevLives: currentPlayers[currentIndex].lives,
+        actionType: 'kill',
+        currentPlayers: JSON.parse(JSON.stringify(currentPlayers)),
+        prevIndex: currentIndex,
+        newLives: 0,
+    };
 
-	
-    const killedPlayer = currentPlayers[currentIndex];
-	
-    currentPlayers[currentIndex].lives = 0;
-
-	
-
-	if (currentPlayers[currentIndex].lives <= 0) {
     alert(`${currentPlayers[currentIndex].name} is out! 💀`);
-    
-		
     currentPlayers.splice(currentIndex, 1);
-    if (currentIndex >= currentPlayers.length) {
-      currentIndex = 0;
+
+    // Adjust currentIndex correctly
+    if (currentPlayers.length === 0) {
+        resetGamePage();
+        return;
     }
-  }
-	
-  nextPlayer();
+
+    if (currentIndex >= currentPlayers.length) {
+        currentIndex = 0;
+    }
+
+    nextPlayer();
 }
 
 /**
@@ -219,7 +218,7 @@ function undoAction() {
         return;
     }
 
-    const { playerIndex, prevLives, newLives, prevIndex, actionType, currentPlayers: prevPlayers} = lastAction;
+    const { playerIndex, prevLives, prevIndex, actionType, currentPlayers: prevPlayers } = lastAction;
 
     currentPlayers = JSON.parse(JSON.stringify(prevPlayers));
     currentIndex = prevIndex;
@@ -231,7 +230,6 @@ function undoAction() {
     lastAction = null;
     updateGameUI();
 }
-
 
 /** ========== RESET & NAVIGATION ========== **/
 
